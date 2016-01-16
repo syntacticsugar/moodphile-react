@@ -1,4 +1,38 @@
 .container {
-  background-image: url("../images/p6.png");
-  background-repeat: repeat-y;
+  background-image: url("../images/p6.png") repeat;
+  background-color: #f9f4f4;
+}
+
+.navbar-inverse {
+  background: #f9f4f4;
+  border: none;
+}
+.post-mood-wrapper label {
+  color: #8c8c8c;
+}
+.navbar .nav > li > a {
+  font-size: 1.3em;
+}
+
+/* menu color */
+.navbar-inverse .navbar-nav > li > a {
+  color: #6b9430; /* bright grass */
+}
+/* active menu */
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+    background: none;
+    color: #38570c;  /* burnt grass */
+}
+
+/* hover menu */
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+  color: #4f731c; /* medium grass */
+  background-color: transparent;
+}
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  color: #4f731c; /* medium grass */
+  background-color: transparent;
 }
