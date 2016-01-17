@@ -1,11 +1,17 @@
 .container {
   background-image: url("../images/p6.png") repeat;
-  background-color: #f9f4f4;
+  background-color: #f7f0f0;
 }
 
 .navbar-inverse {
-  background: #f9f4f4;
+  background: rgba(0,0,0,0.01);
   border: none;
+}
+a.navbar-brand {
+  position: relative;
+  top: -0.5em;
+  border: 1px dotted gainsboro;
+  margin-right: 1em;
 }
 .post-mood-wrapper label {
   color: #8c8c8c;
@@ -36,3 +42,22 @@
   color: #4f731c; /* medium grass */
   background-color: transparent;
 }
+.label-lowlight {
+  color: silver;
+  font-weight: normal;
+}
+/*
+ * button for moods
+ *
+ */
+*:focus {
+  outline: none;
+  outline: 0;
+}
+.form-control:focus {
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+
