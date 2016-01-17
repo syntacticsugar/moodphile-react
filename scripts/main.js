@@ -20,6 +20,14 @@ var App = React.createClass({
       moods : {}
     }
   },
+  addMood : function() {
+    var timestamp = (new Date()).getTime();
+    // update the state object
+    this.state.fishes["fish-" + timestamp] = fish;
+    // set the state
+    this.setState({ fishes : this.state.fishes});
+
+  },
   render : function() {
     return (
     <section className="post-mood-wrapper col-md-4">
@@ -38,7 +46,7 @@ var App = React.createClass({
             <input type="text" className="form-control" id="inputDefault" placeholder="...like living room"/>
           </div>
         </div>
-        <MoodButtons/>
+        <MoodButtonsPanel/>
       </div>
       <form className="form-vertical">
           <div className="form-group">
@@ -70,7 +78,28 @@ var MoodNucleus = React.createClass({
     )
   }
 })
-var MoodButtons = React.createClass({
+var SubmitMood = React.createClass({
+  createMood : function(event) {
+    // 1. stop the form from submitting
+    event.preventDefault();
+    // 2. take form data and create object
+    var mood = {
+      moodValue : this.refs.moodValue.value,
+      user : this.refs.user.value,
+      location : this.refs.location.value,
+      longDescription : this.refs.longDescription.value,
+      image : this.refs.image.value,
+      likes : this.refs.likes.value,
+      comments : this.refs.comments.value,
+      hoursOfSleep : this.refs.hoursOfSleep.value,
+      femaleCycle : this.refs.femaleCycle.value,
+      medication : this.refs.medication.value,
+      fitness : this.refs.fitness.value
+    }
+  }
+
+})
+var MoodButtonsPanel = React.createClass({
   render : function() {
     return (
       <div className="mood-pusher-wrapper">
