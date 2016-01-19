@@ -30,11 +30,11 @@ var App = React.createClass({
   },
   render : function() {
     return (
-      <MoodButtonsWrapper/>  
-  )
+      <MoodPusherWrapper/>
+    )
   }
 });
-var MoodButtonsWrapper = React.createClass({
+var MoodPusherWrapper = React.createClass({
   render : function() {
     return (
       <section className="post-mood-wrapper col-md-4">
