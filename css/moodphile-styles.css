@@ -10,7 +10,6 @@
 a.navbar-brand {
   position: relative;
   top: -0.5em;
-  border: 1px dotted gainsboro;
   margin-right: 1em;
 }
 .post-mood-wrapper label {
@@ -24,6 +23,7 @@ a.navbar-brand {
 .navbar-inverse .navbar-nav > li > a {
   color: #6b9430; /* bright grass */
   color: #774e55; /* dark faded rose */
+  color: #8e555f; /* sunlit dusty rose */
 }
 /* active menu */
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
@@ -32,16 +32,37 @@ a.navbar-brand {
 }
 
 /* hover menu */
-.navbar-inverse .navbar-nav > li > a:hover,
-.navbar-inverse .navbar-nav > li > a:focus {
-  color: #4f731c; /* medium grass */
-  background-color: transparent;
-}
 .navbar-inverse .navbar-nav > .active > a,
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav > .active > a:focus {
   color: #4f731c; /* medium grass */
+  color: #8e555f; /* sunlit dusty rose */
+  color: #aa576c; /* plumeria */
   background-color: transparent;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+  color: #4f731c; /* medium grass */
+  color: #8e555f; /* sunlit dusty rose */
+  color: #aa576c; /* plumeria */
+  background-color: transparent;
+  background-color: #f4e9eb;
+}
+
+.navbar-inverse .navbar-toggle .icon-bar {
+  background-color: #b62758;
+}
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+  background-color: #e0ccd3;
+}
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+  background-color: #90445e; /* vintage maroon */
+  color: #e7c6d1; /* pale cotton pink */
 }
 .label-lowlight {
   color: silver;
@@ -59,6 +80,20 @@ a.navbar-brand {
   border-color: inherit;
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+.form-control {
+  font-family: courier, 'courier new', monospace;
+  font-size: 1.2em;
+    letter-spacing: -0.02em;
+  color: #2d8ba3;
+}
+::-webkit-input-placeholder, 
+:-moz-placeholder,
+::-moz-placeholder,
+:-ms-input-placeholder,
+::-ms-input-placeholder,
+:placeholder-shown {
+  color: #8c636d;
 }
 
 /*
