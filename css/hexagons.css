@@ -55,7 +55,7 @@ body {
 
 /* HEX CONTENT */
 
-.hex img {
+.hex img, .hex .pseudo-img {
     left: -100%;
     right: -100%;
     width: auto;
@@ -65,17 +65,26 @@ body {
         -ms-transform: translatez(-1px);
             transform: translatez(-1px);
 }
+.hex .pseudo-img {
+  width: 430px;
+  background-color: #e0ccd3;
+  background-color: #f1e8eb;
+  background-color: #e0ccd3;
+}
+.p6-tile {
+  background: url("../images/p6.png") repeat;
+}
+.p6-2x-tile {
+  background: url("../images/p6_@2X.png") repeat;
+}
 
 .hex h1, .hex p {
     width: 102%;
     left:-1%; /* prevent line on the right where background doesn't cover image */
     padding: 5%;
+    color: #d9baba;
     box-sizing:border-box;
-    background-color: rgba(0, 128, 128, 0.8);
     font-weight: 300;
-    -webkit-transition:  -webkit-transform .2s ease-out, opacity .3s ease-out;
-            transition:          transform .2s ease-out, opacity .3s ease-out;
-    -webkit-font-smoothing: subpixel-antialiased; /* fix for font antialiasing after hover transition */
 }
 
 .hex h1 {
@@ -83,9 +92,11 @@ body {
     padding-top:50%;
     font-size: 1.5em;
     z-index: 1;
+    /*
     -webkit-transform:translateY(-100%) translatez(-1px);
         -ms-transform:translateY(-100%) translatez(-1px);
             transform:translateY(-100%) translatez(-1px);
+            */
 }
 
 .hex h1:after {
@@ -101,9 +112,11 @@ body {
 .hex p {
     top: 50%;
     padding-bottom:50%;
+    /*
     -webkit-transform:translateY(100%) translatez(-1px);
         -ms-transform:translateY(100%) translatez(-1px);
             transform:translateY(100%) translatez(-1px);
+            */
 }
 
 
@@ -260,3 +273,4 @@ body {
         font-size: 13px;
     }
 }
+

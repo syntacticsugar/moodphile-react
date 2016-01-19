@@ -23,6 +23,7 @@ a.navbar-brand {
 /* menu color */
 .navbar-inverse .navbar-nav > li > a {
   color: #6b9430; /* bright grass */
+  color: #774e55; /* dark faded rose */
 }
 /* active menu */
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
@@ -60,4 +61,21 @@ a.navbar-brand {
   box-shadow: none;
 }
 
+/*
+ *
+ * HEXA MOODS
+ *
+ * */
+h1.mood-value {
+  bottom: 34%;
+  font-size: 5em;
+}
+.hex h1:after {
+  border-bottom: 0;
+}
+.dusty-deep-rose {
+  color: #886a6a;
+}
 
+.hex h1, .hex p {
+}
