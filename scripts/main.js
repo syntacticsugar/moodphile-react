@@ -30,24 +30,31 @@ var App = React.createClass({
   },
   render : function() {
     return (
-        <section className="post-mood-wrapper col-md-4">
-            <div className="form-horizontal">
-                <div className="form-group">
-                    <label className="control-label" for="inputDefault">Name</label>
-                    <input type="text" className="form-control" id="inputDefault" placeholder="start typing..."/>
-                </div>
-                <div className="form-group">
-                    <label className="control-label" for="inputDefault">What are you doing?</label>
-                    <input type="text" className="form-control" id="inputDefault" placeholder="...like reading in bed"/>
-                </div>
-                <div className="form-group">
-                    <div className=''>
-                      <label className="control-label" for="inputDefault">Location?</label>
-                      <input type="text" className="form-control" id="inputDefault" placeholder="...like living room"/>
-                    </div>
-                </div>
-                <MoodButtons/>
-            </div>
+      <MoodButtonsWrapper/>  
+  )
+  }
+});
+var MoodButtonsWrapper = React.createClass({
+  render : function() {
+    return (
+      <section className="post-mood-wrapper col-md-4">
+          <div className="form-horizontal">
+              <div className="form-group">
+                  <label className="control-label" for="inputDefault">Name</label>
+                  <input type="text" className="form-control" id="inputDefault" placeholder="start typing..."/>
+              </div>
+              <div className="form-group">
+                  <label className="control-label" for="inputDefault">What are you doing?</label>
+                  <input type="text" className="form-control" id="inputDefault" placeholder="...like reading in bed"/>
+              </div>
+              <div className="form-group">
+                  <div className=''>
+                    <label className="control-label" for="inputDefault">Location?</label>
+                    <input type="text" className="form-control" id="inputDefault" placeholder="...like living room"/>
+                  </div>
+              </div>
+              <MoodButtons/>
+          </div>
           <form className="form-vertical">
               <div className="form-group">
                   <label for="name" className="col-xs-2 control-label">You</label>
@@ -66,14 +73,7 @@ var App = React.createClass({
                   </div>
               </div>
           </form>
-        </section>
-  )
-  }
-});
-var MoodButtonsInputFields = React.createClass({
-  render : function() {
-    return (
-      <div></div>
+      </section>
     )
   }
 })
