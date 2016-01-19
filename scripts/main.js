@@ -46,7 +46,7 @@ var App = React.createClass({
             <input type="text" className="form-control" id="inputDefault" placeholder="...like living room"/>
           </div>
         </div>
-        <MoodButtonsPanel/>
+        <MoodButtons/>
       </div>
       <form className="form-vertical">
           <div className="form-group">
@@ -69,8 +69,16 @@ var App = React.createClass({
     </section>
   )
   }
-
 });
+var MoodButtonsInputFields = React.createClass({
+  render : function() {
+    return (
+      <div></div>
+    )
+  }
+})
+
+
 var MoodNucleus = React.createClass({
   render : function() {
     return (
@@ -96,10 +104,14 @@ var SubmitMood = React.createClass({
       medication : this.refs.medication.value,
       fitness : this.refs.fitness.value
     }
+  },
+  render : function() {
+    return(
+      <div></div>
+    )
   }
-
-})
-var MoodButtonsPanel = React.createClass({
+});
+var MoodButtons= React.createClass({
   render : function() {
     return (
       <div className="mood-pusher-wrapper">
