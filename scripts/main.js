@@ -17,15 +17,16 @@ var App = React.createClass({
   getInitialState : function() {
     return {
       people : {},
-      moods : {}
+      moods : {},
+      moodCurrentlyBeingEdited : {}
     }
   },
   addMood : function() {
     var timestamp = (new Date()).getTime();
     // update the state object
-    this.state.fishes["fish-" + timestamp] = fish;
+    this.state.moods["mood-" + timestamp] = mood;
     // set the state
-    this.setState({ fishes : this.state.fishes});
+    this.setState({ moods : this.state.moods});
 
   },
   render : function() {
@@ -38,7 +39,7 @@ var MoodPusherWrapper = React.createClass({
   render : function() {
     return (
       <section className="post-mood-wrapper col-md-4">
-          <div className="form-horizontal">
+          <form className="form-horizontal">
               <div className="form-group">
                   <label className="control-label" for="inputDefault">Name</label>
                   <input type="text" className="form-control" id="inputDefault" placeholder="start typing..."/>
@@ -54,7 +55,7 @@ var MoodPusherWrapper = React.createClass({
                   </div>
               </div>
               <MoodButtons/>
-          </div>
+          </form>
           <form className="form-vertical">
               <div className="form-group">
                   <label for="name" className="col-xs-2 control-label">You</label>
@@ -91,6 +92,24 @@ var SubmitMood = React.createClass({
     // 1. stop the form from submitting
     event.preventDefault();
     // 2. take form data and create object
+    mood = {};
+    var moodAttributes = [
+            'moodValue',
+            'user',
+            'location',
+            'longDescription',
+            'image',
+            'likes',
+            'comments',
+            'hoursOfSleep',
+            'femaleCycle',
+            'medication',
+            'fitness'
+          ];
+    moodAttributes.forEach( (element) => {
+      mood[element] = this.refs[element].value;
+    });
+    /*
     var mood = {
       moodValue : this.refs.moodValue.value,
       user : this.refs.user.value,
@@ -104,6 +123,8 @@ var SubmitMood = React.createClass({
       medication : this.refs.medication.value,
       fitness : this.refs.fitness.value
     }
+    */
+    console.log("mood object is: " + Object.keys(mood));
   },
   render : function() {
     return(
