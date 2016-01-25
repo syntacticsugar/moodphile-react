@@ -1,6 +1,7 @@
 .container {
   background-image: url("../images/p6.png") repeat;
   background-color: #f7f0f0;
+  background-color: #f8eeee;
 }
 
 .navbar-inverse {
@@ -12,8 +13,11 @@ a.navbar-brand {
   top: -0.5em;
   margin-right: 1em;
 }
-.post-mood-wrapper label {
+.mood-pusher-wrapper label {
   color: #8c8c8c;
+}
+.mood-pusher-wrapper {
+  margin-top: 2em;
 }
 .navbar .nav > li > a {
   font-size: 1.3em;
@@ -56,7 +60,7 @@ a.navbar-brand {
 }
 .navbar-inverse .navbar-toggle:hover,
 .navbar-inverse .navbar-toggle:focus {
-  background-color: #e0ccd3;
+  background-color: #F0DEE4;
 }
 .navbar-inverse .navbar-nav > .open > a,
 .navbar-inverse .navbar-nav > .open > a:hover,
@@ -70,6 +74,28 @@ a.navbar-brand {
 }
 /*
  * button for moods
+ *
+ */
+.nouveau {
+  margin-bottom: 1em;
+  margin-right: 0.5em;
+  padding: 1.3em 1.7em;
+  background-color: transparent;
+  border: 1px dotted #915265;
+  color: #915265;
+  font-size: 1.3em;
+}
+.nouveau:hover {
+  color: white;
+  background-color: #d9bac3;
+}
+.nouveau:active, .nouveau:focus {
+  color: #FA598B;
+  background-color: #6d2a3f;
+
+}
+/*
+ * FORM FOR MOODS
  *
  */
 *:focus {
@@ -87,6 +113,50 @@ a.navbar-brand {
     letter-spacing: -0.02em;
   color: #2d8ba3;
 }
+.form-horizontal .form-group {
+  margin-left: 0;
+}
+.main-mood-panel input.form-control{
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid #d1b2bd;
+  border-bottom: 2px solid #4b1529;
+  border-radius: 0;
+  padding: 0;
+  padding-left: 1em;
+  padding-bottom: -30px;
+  padding-top: 25px;
+}
+.main-mood-panel label {
+  margin-left: 1em;
+  size: 0.8em;
+  color: #a6687f;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+.original-location {
+  display: none;
+  visibility: hidden;
+}
+@media (min-width: 768px) {
+  .form-horizontal .control-label {
+    padding-top: 0;
+  }
+}
+@media only screen  and (min-width : 1024px) {
+  .form-horizontal .control-label  
+  }
+  .main-mood-panel label {
+    padding-top: 0;
+    color: #ffe8f1;
+    padding: 0.1em;
+    background-color: #4b1529; /* charred maroon soot */
+    margin-top: 0px;
+
+  }
+}
+
+
 ::-webkit-input-placeholder, 
 :-moz-placeholder,
 ::-moz-placeholder,
