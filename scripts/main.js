@@ -21,7 +21,7 @@ var App = React.createClass({
       moodCurrentlyBeingEdited : {}
     }
   },
-  addMoodToState : function() {
+  addMoodToState : function(mood) {
     var timestamp = (new Date()).getTime();
     // update the state object
     this.state.moods["mood-" + timestamp] = mood;
@@ -38,13 +38,44 @@ var App = React.createClass({
 
 
 var MasterMoodEntry = React.createClass({
+  getInitialState : function() {
+    return {
+      moodValue : undefined
+    }
+
+  },
+  setMoodValue : function(moodValue) {
+    this.state.moodValue = moodValue;
+    this.setState({ moodValue : this.state.moodValue});
+  },
   createMood : function(event) {
     // 1. stop the form from submitting
     event.preventDefault();
     // 2. take form data and create object
-  
+    console.log(this.refs);
+    console.log(this.state);
+    var mood = {
+          /* moodValue : this.refs.moodValue.value, */
+          moodValue : this.state.moodValue,
+          user : this.refs.user.value,
+          activity : this.refs.activity.value,
+          location : this.refs.location.value,
+          locationLarger : this.refs.locationLarger.value,
+        };
+    console.log("mood is: " + mood);
+    console.log("this.refs: " + this.refs);
+    console.log("our props in: " + this.props);
+    console.log("this: " + this);
+
+
+    /* add Mood to our App state */
+    this.props.addMoodToState(mood);
+
+    /* clear moodForm after submit */
+    this.refs.moodForm.reset();
+
     /* alert("mood object is: " + mood["moodValue"]); */
-    alert("wowza");
+    alert(mood.moodValue);
   },
   render : function() {
     return (
@@ -52,39 +83,31 @@ var MasterMoodEntry = React.createClass({
           <form className="form-horizontal" ref="moodForm" onSubmit={this.createMood}>
               <div className="row">
                 <div className="form-group col-xs-8 col-md-6 col-lg-3">
-                    <input type="text" className="form-control" id="inputDefault" placeholder="start typing..."/>
+                    <input type="text" className="form-control" ref="user" id="inputDefault" placeholder="start typing..."/>
                     <label className="control-label" htmlFor="inputDefault">Name</label>
                 </div>
               </div>
               <div className="row">
                 <div className="form-group col-xs-12 col-md-8 col-lg-8" >
-                    <input type="text" className="form-control" id="inputDefault" placeholder="...like reading in bed"/>
+                    <input type="text" className="form-control" ref="activity" id="inputDefault" placeholder="...like reading in bed"/>
                     <label className="control-label" htmlFor="inputDefault">What are you doing?</label>
-                </div>
-              </div>
-              <div className="row">
-                <div className="form-group original-location">
-                    <div className=''>
-                      <input type="text" className="form-control" id="inputDefault" placeholder="...like living room"/>
-                      <label className="control-label" htmlFor="inputDefault">Location?</label>
-                    </div>
                 </div>
               </div>
 
               <div className="row">
                 <div className="form-group dual-location">
                     <div className="col-xs-6 col-sm-6 col-md-4">
-                        <input type="text" className="form-control" placeholder="bedroom"/>
+                        <input type="text" className="form-control" ref='location' placeholder="bedroom"/>
                         <label htmlFor="birthday" className=" control-label">Location</label>
                     </div>
                     <div className="col-xs-6 col-sm-6 col-md-4">
-                        <input type="text" className="form-control" placeholder="Brooklyn, New York"/>
+                        <input type="text" className="form-control" ref='locationLarger' placeholder="Brooklyn, New York"/>
                         <label htmlhtmlFor="city-state-country" className=" control-label">City/State</label>
                     </div>
                 </div>
               </div>
 
-              <MoodButtons/>
+              <MoodButtons setMoodValue={this.setMoodValue} />
 
               <button type="submit" className="btn btn-default btn-lg">GO</button>
           </form>
@@ -105,6 +128,7 @@ var MoodNucleus = React.createClass({
 })
 var MoodButtons= React.createClass({
   render : function() {
+    var setMoodValue = this.props.setMoodValue;
     return (
       <div className="row mood-pusher-wrapper">
         <div className="form-group col-xs-12 col-sm-8 col-md-8 col-lg-6">
@@ -112,7 +136,7 @@ var MoodButtons= React.createClass({
 
           <div className="btn-group btn-group-lg">
             {[0,1,2,3,4,5,6,7,8,9,10,11].map( function(x) {
-                return <button className='nouveau' key={"poopieface"+x} ref="moodValue" name='mood_on_button' type='button' value={x} >{x}</button>;
+                return <button className='nouveau' key={"poopieface"+x} onClick={function(){setMoodValue(x)}} name='mood_on_button' type='button' value={x} >{x}</button>;
             })}
           </div>
         </div>
