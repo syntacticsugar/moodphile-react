@@ -3,7 +3,18 @@
   <head>
     <title></title>
     <link href="css/sandstone.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   </head>
+  <style type="text/css">
+    .col-* {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      background-color: #eee;
+      background-color: rgba(86,61,124,.15);
+      border: 1px solid #ddd;
+      border: 1px solid rgba(86,61,124,.2);
+    }
+  </style>
   <body class="container">
     <h3> greetings, world</h3>
     <p>Welcome to the <b>mystic land</b> of angular brackets, curly braces, and parens! </p>
@@ -17,24 +28,82 @@
       <li><a href="#tables">Tables</a></li>
       <li><a href="#miscellaneous">Miscellaneous</a></li>
     </ul>
-      <div class="row">
-        <div class="col-md-1">.col-md-1</div>
-        <div class="col-md-1">.col-md-1</div>
-        <div class="col-md-1">.col-md-1</div>
-        <div class="col-md-1">.col-md-1</div>
-        <div class="col-md-1">.col-md-1</div>
-        <div class="col-md-1">.col-md-1</div>
-        <div class="col-md-1">.col-md-1</div>
-        <div class="col-md-1">.col-md-1</div>
-        <div class="col-md-1">.col-md-1</div>
-        <div class="col-md-1">.col-md-1</div>
-        <div class="col-md-1">.col-md-1</div>
-        <div class="col-md-1">.col-md-1</div>
+
+    <div class="btn-toolbar">
+      <div class="btn-group">
+        <a href="#" class="btn btn-default">1</a>
+        <a href="#" class="btn btn-default">2</a>
+        <a href="#" class="btn btn-default">3</a>
+        <a href="#" class="btn btn-default">4</a>
+        <a href="#" class="btn btn-default">5</a>
+        <a href="#" class="btn btn-default">6</a>
+        <a href="#" class="btn btn-default">7</a>
       </div>
-      <div class="row">
-        <div class="col-md-8">.col-md-8</div>
-        <div class="col-md-4">.col-md-4</div>
+
+      <div class="btn-group">
+        <a href="#" class="btn btn-default">5</a>
+        <a href="#" class="btn btn-default">6</a>
+        <a href="#" class="btn btn-default">7</a>
       </div>
+
+      <div class="btn-group">
+        <a href="#" class="btn btn-default">8</a>
+        <div class="btn-group">
+          <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            Dropdown
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Dropdown link</a></li>
+            <li><a href="#">Dropdown link</a></li>
+            <li><a href="#">Dropdown link</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+        
+      <br/><br/><br/>
+
+      <a class="btn btn-danger" href="#">
+        <i class="fa fa-trash-o fa-lg"></i> Delete</a>
+      <a class="btn btn-default btn-sm" href="#">
+        <i class="fa fa-cog"></i> Settings</a>
+
+      <a class="btn btn-lg btn-success" href="#">
+        <i class="fa fa-flag fa-2x pull-left"></i> Font Awesome<br>Version 4.5.0</a>
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+      <div class="row">
+        <div class="col-xs-12 col-md-8">.col-xs-12 .col-md-8</div>
+        <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+      </div>
+
+      <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
+      <div class="row">
+        <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+        <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+        <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+      </div>
+
+      <!-- Columns are always 50% wide, on mobile and desktop -->
+      <div class="row">
+        <div class="col-xs-6">.col-xs-6</div>
+        <div class="col-xs-6">.col-xs-6</div>
+      </div>
+      
       <div class="row">
         <div class="col-md-4"><h2>.col-md-4</h2></div>
         <div class="col-md-4"><h2>.col-md-4</h2></div>
@@ -45,7 +114,28 @@
         <div class="col-md-6">.col-md-6</div>
       </div>
 
+<br/><br/><br/>
+        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          Link with href
+        </a>
+      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Button with data-target
+      </button>
+      <div class="collapse" id="collapseExample">
+        <div class="well">
+      	  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.       
+        </div>
+      </div>
+
+
+
+
+
+
+
   </div>
+  <script src="/scripts/jquery.min.js"></script>
+  <script src="/scripts/bootstrap.min.js"></script>
   </body>
 </html>
 

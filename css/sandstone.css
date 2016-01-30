@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,500");
+/* @import url("https://fonts.googleapis.com/css?family=Roboto:400,500");
+ */
 /*!
  * bootswatch v3.3.6
  * Homepage: http://bootswatch.com
@@ -4638,7 +4639,6 @@ fieldset[disabled] .navbar-default .btn-link:focus {
 }
 .navbar-inverse .navbar-toggle .icon-bar {
   background-color: #6b9430;
-  background-color: #ceb7bf;
 }
 .navbar-inverse .navbar-collapse,
 .navbar-inverse .navbar-form {
@@ -4647,7 +4647,7 @@ fieldset[disabled] .navbar-default .btn-link:focus {
 .navbar-inverse .navbar-nav > .open > a,
 .navbar-inverse .navbar-nav > .open > a:hover,
 .navbar-inverse .navbar-nav > .open > a:focus {
-  background-color: #89be3d;
+  background-color: #89be3d; /* bright grass */
   color: #ffffff;
 }
 @media (max-width: 767px) {

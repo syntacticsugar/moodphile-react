@@ -98,7 +98,7 @@ var MasterMoodEntry = React.createClass({
                 <div className="form-group dual-location">
                     <div className="col-xs-6 col-sm-6 col-md-4">
                         <input type="text" className="form-control" ref='location' placeholder="bedroom"/>
-                        <label htmlFor="birthday" className=" control-label">Location</label>
+                        <label htmlFor="location" className=" control-label">Location</label>
                     </div>
                     <div className="col-xs-6 col-sm-6 col-md-4">
                         <input type="text" className="form-control" ref='locationLarger' placeholder="Brooklyn, New York"/>
@@ -109,7 +109,8 @@ var MasterMoodEntry = React.createClass({
 
               <MoodButtons setMoodValue={this.setMoodValue} />
 
-              <button type="submit" className="btn btn-default btn-lg">GO</button>
+              <button type="submit" className="btn btn-submit-mood">GO</button>
+              <OptionalFlags />
           </form>
 
 
@@ -122,7 +123,18 @@ var MasterMoodEntry = React.createClass({
 var MoodNucleus = React.createClass({
   render : function() {
     return (
-      <p></p>
+      <div id="hexxx ">
+        	<ul id="hexGrid">
+	            <li className="hex">
+	                <a className="hexIn" href="#">
+	                    <div className="pseudo-img">
+	                      <h1 className='hexa mood-value'>8</h1>
+	                      <p>November 6, 2015</p>
+                      </div>
+	                </a>
+	            </li>
+          </ul>
+      </div>
     )
   }
 })
@@ -138,6 +150,29 @@ var MoodButtons= React.createClass({
             {[0,1,2,3,4,5,6,7,8,9,10,11].map( function(x) {
                 return <button className='nouveau' key={"poopieface"+x} onClick={function(){setMoodValue(x)}} name='mood_on_button' type='button' value={x} >{x}</button>;
             })}
+          </div>
+        </div>
+      </div>
+    )
+  }
+});
+var OptionalFlags= React.createClass({
+  render : function() {
+    return(
+      <div className="optional-flags-wrapper">
+        <a className="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">More options</a>
+        <div className="optional-fields collapse" id="collapseExample">
+          <div className="row">
+            <div className="form-group dual-location">
+                <div className="col-xs-6 col-sm-6 col-md-4">
+                    <input type="text" className="form-control" ref='medication' placeholder="separated by commas"/>
+                    <label htmlFor="birthday" className=" control-label">Vitamins, medications, etc</label>
+                </div>
+                <div className="col-xs-6 col-sm-6 col-md-4">
+                    <input type="text" className="form-control" ref='fitness' placeholder="steps taken"/>
+                    <label htmlFor="Fitness" className=" control-label">Fitness (steps)</label>
+                </div>
+            </div>
           </div>
         </div>
       </div>

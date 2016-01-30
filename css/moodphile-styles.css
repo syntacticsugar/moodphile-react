@@ -13,12 +13,6 @@ a.navbar-brand {
   top: -0.5em;
   margin-right: 1em;
 }
-.mood-pusher-wrapper label {
-  color: #8c8c8c;
-}
-.mood-pusher-wrapper {
-  margin-top: 2em;
-}
 .navbar .nav > li > a {
   font-size: 1.3em;
 }
@@ -68,31 +62,29 @@ a.navbar-brand {
   background-color: #90445e; /* vintage maroon */
   color: #e7c6d1; /* pale cotton pink */
 }
-.label-lowlight {
-  color: silver;
-  font-weight: normal;
-}
 /*
  * button for moods
  *
  */
 .nouveau {
-  margin-bottom: 1em;
+  margin-bottom: 0.6em;
   margin-right: 0.5em;
   padding: 1.3em 1.7em;
   background-color: transparent;
   border: 1px dotted #915265;
   color: #915265;
   font-size: 1.3em;
+  max-width: 75px;
+}
+.nouveau:nth-last-child(1), .nouveau:nth-last-child(2) {
+  padding-left: 1.45em;
 }
 .nouveau:hover {
-  color: white;
-  background-color: #d9bac3;
+  background-color: #e6abbc;
 }
 .nouveau:active, .nouveau:focus {
   color: #FA598B;
-  background-color: #6d2a3f;
-
+  background-color: #6d2a3f; /* deep plum */
 }
 /*
  * FORM FOR MOODS
@@ -113,6 +105,9 @@ a.navbar-brand {
     letter-spacing: -0.02em;
   color: #2d8ba3;
 }
+.form-group {
+  margin-bottom: 0;
+}
 .form-horizontal .form-group {
   margin-left: 0;
 }
@@ -125,7 +120,7 @@ a.navbar-brand {
   padding: 0;
   padding-left: 1em;
   padding-bottom: -30px;
-  padding-top: 25px;
+  padding-top: 22px;
 }
 .main-mood-panel label {
   margin-left: 1em;
@@ -157,13 +152,58 @@ a.navbar-brand {
 }
 
 
-::-webkit-input-placeholder, 
-:-moz-placeholder,
-::-moz-placeholder,
-:-ms-input-placeholder,
-::-ms-input-placeholder,
-:placeholder-shown {
-  color: #8c636d;
+.form-control::-moz-placeholder,
+.form-control:-ms-input-placeholder,
+.form-control::-webkit-input-placeholder {
+  color: #d195a5;
+  opacity: 1;
+}
+.form-control::-ms-expand {
+  border: 0;
+  background-color: transparent;
+}
+
+.form-control::-moz-placeholder {
+  color: #d195a5;
+  opacity: 1;
+}
+.form-control:-ms-input-placeholder {
+  color: #d195a5;
+}
+.form-control::-webkit-input-placeholder {
+  color: #d195a5;
+}
+
+.label-lowlight {
+  color: dimgray;
+  font-weight: normal;
+}
+.mood-pusher-wrapper label {
+  color: #8c8c8c;
+}
+.mood-pusher-wrapper {
+  margin-top: 2em;
+  border: 0px dotted thistle;
+}
+
+.mood-pusher-wrapper dt {
+  margin: 1em 0;
+}
+
+.main-mood-panel button.btn-submit-mood {
+  background-color: #9f2e58; /* raspberry rising */
+  font-family: "roboto condensed";
+    font-size: 1.5em;
+    color: #f8eeee;
+  width: 7em;
+  border-radius: 0;
+  border-bottom: 3px solid #841c42;
+}
+.main-mood-panel button.btn-submit-mood:hover {
+  background-color: #bc295f; /* bright raspberry */
+}
+.main-mood-panel button.btn-submit-mood:focus {
+  background-color: #6d2a3f; /* deep plum */
 }
 
 /*
@@ -183,4 +223,11 @@ h1.mood-value {
 }
 
 .hex h1, .hex p {
+}
+
+/*
+ * 
+ */
+.optional-flags-wrapper {
+  background-color: #f0dce0;
 }

@@ -274,3 +274,6 @@ body {
     }
 }
 
+.hexa.mood-value {
+  color: hsla(341,98,31,0.5);
+}
