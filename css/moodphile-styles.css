@@ -80,7 +80,9 @@ a.navbar-brand {
   padding-left: 1.45em;
 }
 .nouveau:hover {
-  background-color: #e6abbc;
+  background-color: #e6abbc; /* light rose red */
+  background-color: #1f9ebe; /* deep sky blue crayon  */
+  color: #c6f4ff; /* pale sky blue crayon */
 }
 .nouveau:active, .nouveau:focus {
   color: #FA598B;
@@ -203,7 +205,8 @@ a.navbar-brand {
   background-color: #bc295f; /* bright raspberry */
 }
 .main-mood-panel button.btn-submit-mood:focus {
-  background-color: #6d2a3f; /* deep plum */
+  background-color: #2d0012; /* black deep plum */
+  color: #b0ea00; /* lime green */
 }
 
 /*
@@ -229,5 +232,14 @@ h1.mood-value {
  * 
  */
 .optional-flags-wrapper {
+  margin-top: 0.5em;
   background-color: #f0dce0;
+  padding: 0.5em;
+}
+
+.optional-flags-wrapper a.btn.btn-primary {
+  background-color: transparent;
+  color: #69273b;
+  line-height: 1em;
+  border-bottom: 2px solid #9e163f;
 }

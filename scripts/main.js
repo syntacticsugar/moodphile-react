@@ -18,20 +18,29 @@ var App = React.createClass({
     return {
       people : {},
       moods : {},
-      moodCurrentlyBeingEdited : {}
+      latestMood : undefined,
+      /* moodCurrentlyBeingEdited : {} */
     }
   },
   addMoodToState : function(mood) {
     var timestamp = (new Date()).getTime();
     // update the state object
     this.state.moods["mood-" + timestamp] = mood;
+    // also, simultaneously replace latestMood //
+    this.state.latestMood = mood;
     // set the state
-    this.setState({ moods : this.state.moods});
+    this.setState({
+      moods : this.state.moods,
+      latestMood : this.state.latestMood
+    });
 
   },
   render : function() {
     return (
-      <MasterMoodEntry addMoodToState={this.addMoodToState} />
+      <div>
+        <MasterMoodEntry addMoodToState={this.addMoodToState} />
+        <SingleMood moodProp={this.state.latestMood} />
+      </div>
     )
   }
 });
@@ -61,6 +70,7 @@ var MasterMoodEntry = React.createClass({
           activity : this.refs.activity.value,
           location : this.refs.location.value,
           locationLarger : this.refs.locationLarger.value,
+          submitTime: (new Date()),
         };
     console.log("mood is: " + mood);
     console.log("this.refs: " + this.refs);
@@ -75,7 +85,7 @@ var MasterMoodEntry = React.createClass({
     this.refs.moodForm.reset();
 
     /* alert("mood object is: " + mood["moodValue"]); */
-    alert(mood.moodValue);
+/*    alert(mood.moodValue); */
   },
   render : function() {
     return (
@@ -102,7 +112,7 @@ var MasterMoodEntry = React.createClass({
                     </div>
                     <div className="col-xs-6 col-sm-6 col-md-4">
                         <input type="text" className="form-control" ref='locationLarger' placeholder="Brooklyn, New York"/>
-                        <label htmlhtmlFor="city-state-country" className=" control-label">City/State</label>
+                        <label htmlFor="city-state-country" className=" control-label">City/State</label>
                     </div>
                 </div>
               </div>
@@ -119,18 +129,46 @@ var MasterMoodEntry = React.createClass({
   }
 })
 
+var SingleMood = React.createClass({
+  render : function() {
+    if (this.props.moodProp) {
+      return (<MoodNucleus moodProp={this.props.moodProp} />);
+    } else {
+      return (<p>Plz enter your mood for me!!!</p>);
+    }
+  },
+});
 
 var MoodNucleus = React.createClass({
   render : function() {
+    var details = this.props.moodProp;
+
     return (
       <div id="hexxx ">
         	<ul id="hexGrid">
 	            <li className="hex">
 	                <a className="hexIn" href="#">
 	                    <div className="pseudo-img">
-	                      <h1 className='hexa mood-value'>8</h1>
-	                      <p>November 6, 2015</p>
+	                      <h1 className='hexa mood-value'>{details.moodValue}</h1>
+	                      <p>{h.prettyDate(details.submitTime)}</p>
+                        <br/>{h.prettyTime(details.submitTime)}
                       </div>
+	                </a>
+	            </li>
+              <li className="hex">
+	                <a className="hexIn" href="#">
+                    <img src="images/flickr-solo-walk.jpg" alt="" />
+	                    <h1>This is a title</h1>
+	                    <p>Gray cast, a gray film settles upon our eyes like a veil.
+                        Drops of rain gather around us.</p>
+	                </a>
+	            </li>
+              <li className="hex">
+	                <a className="hexIn" href="#">
+	                    <h1>This is a title</h1>
+	                    <p className="hexagon-long-text">The pellucid curtains of tiny crystal are draped in layers. There's a fey allure to the
+                        wings of the moth, as they incandesce and flicker under the lamplight.
+                        Zephyrs, breathing like the sieves of an organ, respire for their rounded minute.</p>
 	                </a>
 	            </li>
           </ul>
@@ -159,22 +197,24 @@ var MoodButtons= React.createClass({
 var OptionalFlags= React.createClass({
   render : function() {
     return(
-      <div className="optional-flags-wrapper">
-        <a className="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">More options</a>
-        <div className="optional-fields collapse" id="collapseExample">
-          <div className="row">
-            <div className="form-group dual-location">
-                <div className="col-xs-6 col-sm-6 col-md-4">
-                    <input type="text" className="form-control" ref='medication' placeholder="separated by commas"/>
-                    <label htmlFor="birthday" className=" control-label">Vitamins, medications, etc</label>
+      <div className="row">
+          <div className="optional-flags-wrapper">
+            <a className="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">More options</a>
+            <div className="optional-fields collapse" id="collapseExample">
+              <div className="row">
+                <div className="form-group dual-location">
+                    <div className="col-xs-6 col-sm-6 col-md-4">
+                        <input type="text" className="form-control" ref='medication' placeholder="separated by commas"/>
+                        <label htmlFor="birthday" className=" control-label">Vitamins, medications, etc</label>
+                    </div>
+                    <div className="col-xs-6 col-sm-6 col-md-4">
+                        <input type="text" className="form-control" ref='fitness' placeholder="steps taken"/>
+                        <label htmlFor="Fitness" className=" control-label">Fitness (steps)</label>
+                    </div>
                 </div>
-                <div className="col-xs-6 col-sm-6 col-md-4">
-                    <input type="text" className="form-control" ref='fitness' placeholder="steps taken"/>
-                    <label htmlFor="Fitness" className=" control-label">Fitness (steps)</label>
-                </div>
+              </div>
             </div>
           </div>
-        </div>
       </div>
     )
   }
