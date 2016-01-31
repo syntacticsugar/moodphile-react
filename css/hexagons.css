@@ -3,16 +3,12 @@
     padding: 0;
 }
 
-body {
-    background: rgb(123, 158, 158);
-}
 
 #hexGrid {
     overflow: hidden;
     width: 90%;
     margin: 0 auto;
     padding:0.866% 0;
-                                       
     font-size: 15px;
 }
 
@@ -66,7 +62,7 @@ body {
             transform: translatez(-1px);
 }
 .hex .pseudo-img {
-  width: 430px;
+  width: 26.5em;
   background-color: #e0ccd3;
   background-color: #f1e8eb;
   background-color: #e0ccd3;
@@ -84,7 +80,7 @@ body {
     padding: 5%;
     color: #d9baba;
     box-sizing:border-box;
-    font-weight: 300;
+    /* font-weight: 300; */
 }
 
 .hex h1 {
@@ -127,12 +123,14 @@ body {
     -webkit-transform:translateY(0%) translatez(-1px);
         -ms-transform:translateY(0%) translatez(-1px);
             transform:translateY(0%) translatez(-1px);
+            -webkit-backface-visibility: hidden;
 }
 
 .hexIn:hover p, .hexIn:focus p {
     -webkit-transform:translateY(0%) translatez(-1px);
         -ms-transform:translateY(0%) translatez(-1px);
             transform:translateY(0%) translatez(-1px);
+            -webkit-backface-visibility: hidden;
 }
 
 /* SPACING AND SIZING */
@@ -274,6 +272,21 @@ body {
     }
 }
 
+.hexa.mood-value, .hex p, .hex h1, .hex h3 {
+  color: hsla(341,93%,25%,0.65);
+  padding: 5% 6%;
+}
 .hexa.mood-value {
-  color: hsla(341,98,31,0.5);
+  font-weight: 400;
+
+}
+
+.hex p.hexagon-long-text {
+  text-align: center;
+  top: 24%;
+  color: #54132b;
+}
+.hex p.bleached-pink {
+  color: #f8eeee;
+  text-shadow: 1px 1px 3px black;
 }
