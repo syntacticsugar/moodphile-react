@@ -290,3 +290,7 @@
   color: #f8eeee;
   text-shadow: 1px 1px 3px black;
 }
+.hex p.prettyDate {
+  position: relative;
+  top: 9em;
+}

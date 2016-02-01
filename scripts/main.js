@@ -85,7 +85,7 @@ var MasterMoodEntry = React.createClass({
     this.refs.moodForm.reset();
 
     /* alert("mood object is: " + mood["moodValue"]); */
-/*    alert(mood.moodValue); */
+    /* alert(mood.activity); */
   },
   render : function() {
     return (
@@ -134,7 +134,7 @@ var SingleMood = React.createClass({
     if (this.props.moodProp) {
       return (<MoodNucleus moodProp={this.props.moodProp} />);
     } else {
-      return (<p>Plz enter your mood for me!!!</p>);
+      return (<p>Enter a mood above.</p>);
     }
   },
 });
@@ -150,22 +150,23 @@ var MoodNucleus = React.createClass({
 	                <a className="hexIn" href="#">
 	                    <div className="pseudo-img">
 	                      <h1 className='hexa mood-value'>{details.moodValue}</h1>
-	                      <p>{h.prettyDate(details.submitTime)}</p>
-                        <br/>{h.prettyTime(details.submitTime)}
+                        <p>{h.prettyTime(details.submitTime)}</p>
+	                      <p className="prettyDate">{h.prettyDate(details.submitTime)}</p>
                       </div>
 	                </a>
 	            </li>
               <li className="hex">
 	                <a className="hexIn" href="#">
-                    <img src="images/flickr-solo-walk.jpg" alt="" />
+                    <img src="images/flickr-solo-walk-sepia.jpg" alt="" />
 	                    <h1>This is a title</h1>
-	                    <p>Gray cast, a gray film settles upon our eyes like a veil.
-                        Drops of rain gather around us.</p>
+	                    {/*}<p>Gray cast, a gray film settles upon our eyes like a veil.*/}
+	                    <p>{details.activity}</p>
 	                </a>
 	            </li>
               <li className="hex">
 	                <a className="hexIn" href="#">
-	                    <h1>This is a title</h1>
+                    <img src="images/flickr-beach-maroon.jpg" alt="" />
+	                    <h1>.</h1>
 	                    <p className="hexagon-long-text">The pellucid curtains of tiny crystal are draped in layers. There's a fey allure to the
                         wings of the moth, as they incandesce and flicker under the lamplight.
                         Zephyrs, breathing like the sieves of an organ, respire for their rounded minute.</p>
@@ -203,14 +204,25 @@ var OptionalFlags= React.createClass({
             <div className="optional-fields collapse" id="collapseExample">
               <div className="row">
                 <div className="form-group dual-location">
-                    <div className="col-xs-6 col-sm-6 col-md-4">
+                    <div className="col-xs-2 col-sm-2 col-md-1">
+                        <input type="text" className="form-control" ref='sleep' placeholder="hrs"/>
+                        <label htmlFor="sleep" className=" control-label">Sleep</label>
+                    </div>
+                    <div className="col-xs-5 col-sm-6 col-md-4">
                         <input type="text" className="form-control" ref='medication' placeholder="separated by commas"/>
                         <label htmlFor="birthday" className=" control-label">Vitamins, medications, etc</label>
                     </div>
-                    <div className="col-xs-6 col-sm-6 col-md-4">
+
+                    <div className="col-xs-3 col-sm-3 col-md-2">
                         <input type="text" className="form-control" ref='fitness' placeholder="steps taken"/>
                         <label htmlFor="Fitness" className=" control-label">Fitness (steps)</label>
                     </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="form-group col-xs-12 col-md-8 col-lg-8" >
+                    <input type="text" className="form-control" ref="specificEvent" id="inputDefault" placeholder="Just got news that..."/>
+                    <label className="control-label" htmlFor="specificEvent">Specific event</label>
                 </div>
               </div>
             </div>
