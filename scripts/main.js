@@ -12,6 +12,7 @@ var h = require("./helpers");
 
 //Firebase
 var Rebase = require("re-base");
+var base = Rebase.createClass("https://moodphile.firebaseio.com/");
 
 var App = React.createClass({
   getInitialState : function() {
@@ -21,6 +22,12 @@ var App = React.createClass({
       latestMood : undefined,
       /* moodCurrentlyBeingEdited : {} */
     }
+  },
+  componentDidMount : function() {
+    base.syncState("/", {
+      context : this,
+      state : 'moods'
+    });
   },
   addMoodToState : function(mood) {
     var timestamp = (new Date()).getTime();
