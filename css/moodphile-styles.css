@@ -86,7 +86,9 @@ a.navbar-brand {
 }
 .nouveau:active, .nouveau:focus {
   color: #FA598B;
+  color: #62dfff; /* cyan */
   background-color: #6d2a3f; /* deep plum */
+  background-color: #005368; /*  deeper ocean blue  */
 }
 /*
  * FORM FOR MOODS
