@@ -63,9 +63,13 @@ a.navbar-brand {
   color: #e7c6d1; /* pale cotton pink */
 }
 /*
- * button for moods
+ *
+ * "nouveau"
+ * buttons for moods
  *
  */
+#all-mood-buttons {
+}
 .nouveau {
   margin-bottom: 0.6em;
   margin-right: 0.5em;
@@ -89,6 +93,9 @@ a.navbar-brand {
   color: #62dfff; /* cyan */
   background-color: #6d2a3f; /* deep plum */
   background-color: #005368; /*  deeper ocean blue  */
+}
+.row.mood-pusher-wrapper .form-group {
+  border: 0px solid steelblue;
 }
 /*
  * FORM FOR MOODS
@@ -147,7 +154,7 @@ a.navbar-brand {
   }
 }
 @media only screen  and (min-width : 1024px) {
-  .form-horizontal .control-label  
+  .form-horizontal .control-label
   }
   .main-mood-panel label {
     padding-top: 0;
@@ -235,7 +242,7 @@ h1.mood-value {
 }
 
 /*
- * 
+ *
  */
 .optional-flags-wrapper {
   margin-top: 0.5em;
@@ -248,4 +255,23 @@ h1.mood-value {
   color: #69273b;
   line-height: 1em;
   border-bottom: 2px solid #9e163f;
+}
+
+span.invalid-input-hide {
+  visibility: hidden;
+    margin-left: 1em;
+    color: cadetblue;
+  opacity: 0;
+  transition: visibility 0s 1s, opacity 0.1s linear;
+}
+
+span.invalid-input-show {
+  visibility: visible;
+    margin-left: 1em;
+    color: cadetblue;
+  -webkit-transition: opacity 0.5s linear;
+    -moz-transition:  opacity 0.5s linear;
+    -ms-transition:   opacity 0.5s linear;
+    -o-transition:    opacity 0.5s linear;
+     opacity: 1;
 }

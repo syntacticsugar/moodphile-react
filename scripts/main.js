@@ -56,7 +56,8 @@ var App = React.createClass({
 var MasterMoodEntry = React.createClass({
   getInitialState : function() {
     return {
-      moodValue : undefined
+      moodValue : undefined,
+      showInvalidInputWarning : false,
     }
 
   },
@@ -70,6 +71,15 @@ var MasterMoodEntry = React.createClass({
     // 2. take form data and create object
     console.log(this.refs);
     console.log(this.state);
+
+    // user didn't pick a mood:
+    if (this.state.moodValue===undefined) {
+      this.setState({ showInvalidInputWarning : true});
+      console.log("Why you no give me some mooooodz!")
+      return;
+    }
+    console.log("We have tested moodvalue===undefined.");
+
     var mood = {
           /* moodValue : this.refs.moodValue.value, */
           moodValue : this.state.moodValue,
@@ -77,6 +87,10 @@ var MasterMoodEntry = React.createClass({
           activity : this.refs.activity.value,
           location : this.refs.location.value,
           locationLarger : this.refs.locationLarger.value,
+          sleep : this.refs.sleep.value,
+          medication : this.refs.medication.value,
+          fitness : this.refs.fitness.value,
+          specificEvent : this.refs.specificEvent.value,
           submitTime: (new Date()),
         };
     console.log("mood is: " + mood);
@@ -90,6 +104,10 @@ var MasterMoodEntry = React.createClass({
 
     /* clear moodForm after submit */
     this.refs.moodForm.reset();
+    this.setState({
+      showInvalidInputWarning : false,
+      moodValue: undefined,
+    });
 
     /* alert("mood object is: " + mood["moodValue"]); */
     /* alert(mood.activity); */
@@ -124,10 +142,43 @@ var MasterMoodEntry = React.createClass({
                 </div>
               </div>
 
-              <MoodButtons setMoodValue={this.setMoodValue} />
 
+              <MoodButtons setMoodValue={this.setMoodValue} />
               <button type="submit" className="btn btn-submit-mood">GO</button>
-              <OptionalFlags />
+              <span className={"invalid-input-"+ (this.state.showInvalidInputWarning ? 'show' : 'hide')}>
+                Don't be shy, pick a mood.
+              </span>
+
+              <div className="row">
+                  <div className="optional-flags-wrapper">
+                    <a className="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">More options</a>
+                    <div className="optional-fields collapse" id="collapseExample">
+                      <div className="row">
+                        <div className="form-group dual-location">
+                            <div className="col-xs-2 col-sm-2 col-md-1">
+                                <input type="text" className="form-control" ref='sleep' placeholder="hrs"/>
+                                <label htmlFor="sleep" className=" control-label">Sleep</label>
+                            </div>
+                            <div className="col-xs-5 col-sm-6 col-md-4">
+                                <input type="text" className="form-control" ref='medication' placeholder="separated by commas"/>
+                                <label htmlFor="birthday" className=" control-label">Vitamins, medications, etc</label>
+                            </div>
+
+                            <div className="col-xs-3 col-sm-3 col-md-2">
+                                <input type="text" className="form-control" ref='fitness' placeholder="steps taken"/>
+                                <label htmlFor="Fitness" className=" control-label">Fitness (steps)</label>
+                            </div>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="form-group col-xs-12 col-md-8 col-lg-8" >
+                            <input type="text" className="form-control" ref="specificEvent" id="inputDefault" placeholder="Just got news that..."/>
+                            <label className="control-label" htmlFor="specificEvent">Specific event</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
           </form>
 
 
@@ -192,7 +243,7 @@ var MoodButtons= React.createClass({
         <div className="form-group col-xs-12 col-sm-8 col-md-8 col-lg-6">
           <dt>Mood? <span className="label-lowlight">(O is lowest, 11 is smashingly happy)</span></dt>
 
-          <div className="btn-group btn-group-lg">
+          <div id="all-mood-buttons" className="btn-group-lg">
             {[0,1,2,3,4,5,6,7,8,9,10,11].map( function(x) {
                 return <button className='nouveau' key={"poopieface"+x} onClick={function(){setMoodValue(x)}} name='mood_on_button' type='button' value={x} >{x}</button>;
             })}
@@ -205,36 +256,7 @@ var MoodButtons= React.createClass({
 var OptionalFlags= React.createClass({
   render : function() {
     return(
-      <div className="row">
-          <div className="optional-flags-wrapper">
-            <a className="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">More options</a>
-            <div className="optional-fields collapse" id="collapseExample">
-              <div className="row">
-                <div className="form-group dual-location">
-                    <div className="col-xs-2 col-sm-2 col-md-1">
-                        <input type="text" className="form-control" ref='sleep' placeholder="hrs"/>
-                        <label htmlFor="sleep" className=" control-label">Sleep</label>
-                    </div>
-                    <div className="col-xs-5 col-sm-6 col-md-4">
-                        <input type="text" className="form-control" ref='medication' placeholder="separated by commas"/>
-                        <label htmlFor="birthday" className=" control-label">Vitamins, medications, etc</label>
-                    </div>
-
-                    <div className="col-xs-3 col-sm-3 col-md-2">
-                        <input type="text" className="form-control" ref='fitness' placeholder="steps taken"/>
-                        <label htmlFor="Fitness" className=" control-label">Fitness (steps)</label>
-                    </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="form-group col-xs-12 col-md-8 col-lg-8" >
-                    <input type="text" className="form-control" ref="specificEvent" id="inputDefault" placeholder="Just got news that..."/>
-                    <label className="control-label" htmlFor="specificEvent">Specific event</label>
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
+      <br/>
     )
   }
 });
