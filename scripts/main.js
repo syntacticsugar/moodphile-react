@@ -56,14 +56,14 @@ var App = React.createClass({
 var MasterMoodEntry = React.createClass({
   getInitialState : function() {
     return {
-      moodValue : undefined,
+      moodButtonValue : undefined,
       showInvalidInputWarning : false,
     }
 
   },
-  setMoodValue : function(moodValue) {
-    this.state.moodValue = moodValue;
-    this.setState({ moodValue : this.state.moodValue});
+  setMoodButtonValue : function(moodButtonValue) {
+    this.state.moodButtonValue = moodButtonValue;
+    this.setState({ moodButtonValue : this.state.moodButtonValue});
   },
   createMood : function(event) {
     // 1. stop the form from submitting
@@ -73,16 +73,15 @@ var MasterMoodEntry = React.createClass({
     console.log(this.state);
 
     // user didn't pick a mood:
-    if (this.state.moodValue===undefined) {
+    if (this.state.moodButtonValue===undefined) {
       this.setState({ showInvalidInputWarning : true});
       console.log("Why you no give me some mooooodz!")
       return;
     }
-    console.log("We have tested moodvalue===undefined.");
+    console.log("We have tested moodButtonvalue===undefined.");
 
     var mood = {
-          /* moodValue : this.refs.moodValue.value, */
-          moodValue : this.state.moodValue,
+          moodValue : this.state.moodButtonValue, // we don't have a ref for this value
           user : this.refs.user.value,
           activity : this.refs.activity.value,
           location : this.refs.location.value,
@@ -106,7 +105,7 @@ var MasterMoodEntry = React.createClass({
     this.refs.moodForm.reset();
     this.setState({
       showInvalidInputWarning : false,
-      moodValue: undefined,
+      moodButtonValue: undefined,
     });
 
     /* alert("mood object is: " + mood["moodValue"]); */
@@ -143,7 +142,7 @@ var MasterMoodEntry = React.createClass({
               </div>
 
 
-              <MoodButtons setMoodValue={this.setMoodValue} />
+              <MoodButtons setMoodButtonValue={this.setMoodButtonValue} />
               <button type="submit" className="btn btn-submit-mood">GO</button>
               <span className={"invalid-input-"+ (this.state.showInvalidInputWarning ? 'show' : 'hide')}>
                 Don't be shy, pick a mood.
@@ -237,7 +236,7 @@ var MoodNucleus = React.createClass({
 })
 var MoodButtons= React.createClass({
   render : function() {
-    var setMoodValue = this.props.setMoodValue;
+    var setMoodButtonValue = this.props.setMoodButtonValue;
     return (
       <div className="row mood-pusher-wrapper">
         <div className="form-group col-xs-12 col-sm-8 col-md-8 col-lg-6">
@@ -245,7 +244,7 @@ var MoodButtons= React.createClass({
 
           <div id="all-mood-buttons" className="btn-group-lg">
             {[0,1,2,3,4,5,6,7,8,9,10,11].map( function(x) {
-                return <button className='nouveau' key={"poopieface"+x} onClick={function(){setMoodValue(x)}} name='mood_on_button' type='button' value={x} >{x}</button>;
+                return <button className='nouveau' key={"poopieface"+x} onClick={function(){setMoodButtonValue(x)}} name='mood_on_button' type='button' value={x} >{x}</button>;
             })}
           </div>
         </div>
