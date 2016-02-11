@@ -193,6 +193,14 @@ a.navbar-brand {
   color: dimgray;
   font-weight: normal;
 }
+span.remaining-characters {
+  margin-left: 1em;
+  color: dimgray;
+}
+
+
+
+
 .mood-pusher-wrapper label {
   color: #8c8c8c;
 }

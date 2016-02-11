@@ -58,8 +58,16 @@ var MasterMoodEntry = React.createClass({
     return {
       moodButtonValue : undefined,
       showInvalidInputWarning : false,
+      enteredText : "",
     }
-
+  },
+  handleChange : function(event) {
+    this.setState({ enteredText : event.target.value })
+  },
+  remainingCharacters : function() {
+    if (this.state.enteredText.length>0)  {
+      return 140 - this.state.enteredText.length;
+    }
   },
   setMoodButtonValue : function(moodButtonValue) {
     this.state.moodButtonValue = moodButtonValue;
@@ -106,6 +114,7 @@ var MasterMoodEntry = React.createClass({
     this.setState({
       showInvalidInputWarning : false,
       moodButtonValue: undefined,
+      enteredText : "",
     });
 
     /* alert("mood object is: " + mood["moodValue"]); */
@@ -123,8 +132,9 @@ var MasterMoodEntry = React.createClass({
               </div>
               <div className="row">
                 <div className="form-group col-xs-12 col-md-8 col-lg-8" >
-                    <input type="text" className="form-control" ref="activity" id="inputDefault" placeholder="...like reading in bed"/>
+                    <input type="text" onChange={this.handleChange} className="form-control" ref="activity" id="inputDefault" placeholder="...like reading in bed"/>
                     <label className="control-label" htmlFor="inputDefault">What are you doing?</label>
+                    <span className="remaining-characters">{this.remainingCharacters()}</span>
                 </div>
               </div>
 
