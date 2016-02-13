@@ -85,7 +85,10 @@ var MasterMoodEntry = React.createClass({
   },
   setMoodButtonValue : function(moodButtonValue) {
     this.state.moodButtonValue = moodButtonValue;
-    this.setState({ moodButtonValue : this.state.moodButtonValue});
+    this.setState({
+      moodButtonValue : this.state.moodButtonValue,
+      showInvalidInputWarning : false,
+    });
   },
   createMood : function(event) {
     // 1. stop the form from submitting
