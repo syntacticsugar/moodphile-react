@@ -103,7 +103,7 @@ var MasterMoodEntry = React.createClass({
       console.log("Why you no give me some mooooodz!")
       return;
     }
-    console.log("We have tested moodButtonvalue===undefined.");
+    console.log("We have tested moodButtonValue===undefined.");
 
     var mood = {
           moodValue : this.state.moodButtonValue, // we don't have a ref for this value
@@ -170,7 +170,7 @@ var MasterMoodEntry = React.createClass({
               </div>
 
 
-              <MoodButtons setMoodButtonValue={this.setMoodButtonValue} />
+              <MoodButtons currentMoodButtonValue={this.state.moodButtonValue} setMoodButtonValue={this.setMoodButtonValue} />
               <button type="submit" className="btn btn-submit-mood">GO</button>
               <span className={"invalid-input-"+ (this.state.showInvalidInputWarning ? 'show' : 'hide')}>
                 Don't be shy, pick a mood.
@@ -270,6 +270,7 @@ var MoodNucleus = React.createClass({
 var MoodButtons= React.createClass({
   render : function() {
     var setMoodButtonValue = this.props.setMoodButtonValue;
+    var currentMoodButtonValue = this.props.currentMoodButtonValue;
     return (
       <div className="row mood-pusher-wrapper">
         <div className="form-group col-xs-12 col-sm-8 col-md-8 col-lg-6">
@@ -277,7 +278,13 @@ var MoodButtons= React.createClass({
 
           <div id="all-mood-buttons" className="btn-group-lg">
             {[0,1,2,3,4,5,6,7,8,9,10,11].map( function(x) {
-                return <button className='nouveau' key={"poopieface"+x} onClick={function(){setMoodButtonValue(x)}} name='mood_on_button' type='button' value={x} >{x}</button>;
+              var nouveauButtonClassName;
+              if (currentMoodButtonValue === x) {
+                nouveauButtonClassName = "nouveau nouveau-force-focus"
+              }else {
+                nouveauButtonClassName = "nouveau"
+              }
+                return <button className={nouveauButtonClassName} key={"poopieface"+x} onClick={function(){setMoodButtonValue(x)}} name='mood_on_button' type='button' value={x} >{x}</button>;
             })}
           </div>
         </div>
