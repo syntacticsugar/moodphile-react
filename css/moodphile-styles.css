@@ -236,8 +236,8 @@ span.remaining-characters {
  *
  * */
 h1.mood-value {
-  bottom: 34%;
-  font-size: 5em;
+  bottom: 31%;
+  font-size: 6em;
 }
 .hex h1:after {
   border-bottom: 0;
@@ -283,3 +283,12 @@ span.invalid-input-show {
     -o-transition:    opacity 0.5s linear;
      opacity: 1;
 }
+
+/* WHY DOES THIS NOT FREAKIN WORK!?  */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: thistle 5000s ease-in-out 0s;
+}
+

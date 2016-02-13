@@ -35,6 +35,9 @@
     visibility: visible;
     outline:1px solid transparent; /* fix for jagged edges in FF on hover transition */
 }
+.hex *, .hex *:hover, .hex *:focus, .hex *:active {
+    outline:1px solid transparent; /* fix for jagged edges in FF on hover transition */
+}
 
 .hexIn {
     display:block;
@@ -107,6 +110,7 @@
 
 .hex p {
     top: 50%;
+    top: 48%; /* to adjust for larger font-size */
     padding-bottom:50%;
     /*
     -webkit-transform:translateY(100%) translatez(-1px);
@@ -273,11 +277,18 @@
 }
 
 .hexa.mood-value, .hex p, .hex h1, .hex h3 {
+  font-family: 'roboto condensed';
   color: hsla(341,93%,25%,0.65);
   padding: 5% 6%;
+  text-shadow: 1px 1px 2px rgba(194,254,255,1);
+    outline:1px solid transparent; /* fix for jagged edges in FF on hover transition */
 }
+.hexa.mood-value:hover, .hex p:hover, .hex h1:hover, .hex h3:hover {
+    outline:1px solid transparent; /* fix for jagged edges in FF on hover transition */
+}
+
 .hexa.mood-value {
-  font-weight: 400;
+  font-weight: 800;
 
 }
 
@@ -292,5 +303,30 @@
 }
 .hex p.prettyDate {
   position: relative;
-  top: 9em;
+  top: 9.2em;
+  letter-spacing: 0.06em;
 }
+p.pretty-time {
+  font-family: 'roboto condensed';
+  font-size: 1.5em;
+  font-weight: 600;
+}
+.hex .pseudo-img.teal {
+  background-color: #54c0bf;
+}
+
+.hex .pseudo-img.teal h1,
+.hex .pseudo-img.teal p {
+  color: #107978;
+}
+.hex .pseudo-img.teal p.pretty-time {
+  color: #c2feff;
+  text-shadow: 1px 1px 2px #1f9391;
+}
+.hex .pseudo-img.teal p.prettyDate {
+  color: rgba(194,254,255,1);
+  text-shadow: 1px 1px 2px #1f9391;
+}
+
+
+
