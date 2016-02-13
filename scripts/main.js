@@ -30,7 +30,7 @@ var App = React.createClass({
     });
   },
   addMoodToState : function(mood) {
-    var timestamp = (new Date()).getTime();
+    var timestamp = (new Date(mood.submitTime)).getTime();
     // update the state object
     this.state.moods["mood-" + timestamp] = mood;
     // also, simultaneously replace latestMood //
@@ -96,9 +96,10 @@ var MasterMoodEntry = React.createClass({
           locationLarger : this.refs.locationLarger.value,
           sleep : this.refs.sleep.value,
           medication : this.refs.medication.value,
-          fitness : this.refs.fitness.value,
+          sunlight : this.refs.sunlight.value,
           specificEvent : this.refs.specificEvent.value,
-          submitTime: (new Date()),
+          // submitTime is stringified to allow Firebase persistence
+          submitTime: (new Date()).toString(),
         };
     console.log("mood is: " + mood);
     console.log("this.refs: " + this.refs);
@@ -123,7 +124,7 @@ var MasterMoodEntry = React.createClass({
   render : function() {
     return (
       <section className="main-mood-panel col-xs-12 col-md-12 col-lg-12">
-          <form className="form-horizontal" ref="moodForm" onSubmit={this.createMood}>
+          <form className="form-horizontal" ref="moodForm" onSubmit={this.createMood} autoComplete="off">
               <div className="row">
                 <div className="form-group col-xs-8 col-md-6 col-lg-3">
                     <input type="text" className="form-control" ref="user" id="inputDefault" placeholder="start typing..."/>
@@ -132,7 +133,7 @@ var MasterMoodEntry = React.createClass({
               </div>
               <div className="row">
                 <div className="form-group col-xs-12 col-md-8 col-lg-8" >
-                    <input type="text" onChange={this.handleChange} className="form-control" ref="activity" id="inputDefault" placeholder="...like reading in bed"/>
+                    <input type="text" onChange={this.handleChange} className="form-control" ref="activity" id="inputDefault" placeholder="...like reading in bed"  autoComplete="off"/>
                     <label className="control-label" htmlFor="inputDefault">What are you doing?</label>
                     <span className="remaining-characters">{this.remainingCharacters()}</span>
                 </div>
@@ -174,8 +175,8 @@ var MasterMoodEntry = React.createClass({
                             </div>
 
                             <div className="col-xs-3 col-sm-3 col-md-2">
-                                <input type="text" className="form-control" ref='fitness' placeholder="steps taken"/>
-                                <label htmlFor="Fitness" className=" control-label">Fitness (steps)</label>
+                                <input type="text" className="form-control" ref='sunlight' placeholder="minutes"/>
+                                <label htmlFor="sunlight" className=" control-label">sunlight</label>
                             </div>
                         </div>
                       </div>
@@ -209,16 +210,18 @@ var SingleMood = React.createClass({
 var MoodNucleus = React.createClass({
   render : function() {
     var details = this.props.moodProp;
+    // wherein we UNstringify submitTime so our helper methods actually work
+    var rawSubmitTime = new Date(details.submitTime);
 
     return (
       <div id="hexxx ">
         	<ul id="hexGrid">
 	            <li className="hex">
 	                <a className="hexIn" href="#">
-	                    <div className="pseudo-img">
+	                    <div className="pseudo-img teal">
 	                      <h1 className='hexa mood-value'>{details.moodValue}</h1>
-                        <p>{h.prettyTime(details.submitTime)}</p>
-	                      <p className="prettyDate">{h.prettyDate(details.submitTime)}</p>
+                        <p className="pretty-time">{h.prettyTime(rawSubmitTime)}</p>
+	                      <p className="prettyDate">{h.prettyDate(rawSubmitTime)}</p>
                       </div>
 	                </a>
 	            </li>
