@@ -50,13 +50,17 @@ var App = React.createClass({
       moods : this.state.moods,
       latestMood : this.state.latestMood
     });
+  },
+  removeMoodFromState : function(key) {
+    this.state.moods[key] = null;
+    this.setState({ moods : this.state.moods })
 
   },
   render : function() {
     return (
       <div>
         <MasterMoodEntry addMoodToState={this.addMoodToState} />
-        <SingleMood moodProp={this.state.latestMood} />
+        <SingleMoodOrErrorMessage moodDatum={this.state.latestMood} errorMessage="Moods will display here after you enter one."/>
       </div>
     )
   }
