@@ -292,5 +292,25 @@ var OptionalFlags= React.createClass({
     )
   }
 });
+var AllMoods = React.createClass({
+  renderMood : function(key) {
+    return (
+      <MoodNucleus key={key} index={key} details={this.state.moods[key]} />
+    )
+
+  },
+  render : function() {
+    return (
+      <div>
+        <h3>&lt;AllMoods /&gt; component</h3>
+        <ul className="list-of-moods">
+          {Object.keys(this.state.moods).map(this.renderMood)}
+        </ul>
+
+      </div>
+
+    )
+  }
+});
 
 ReactDOM.render(<App/>, document.querySelector('#main-moods'));
