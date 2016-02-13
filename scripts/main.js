@@ -23,11 +23,21 @@ var App = React.createClass({
       /* moodCurrentlyBeingEdited : {} */
     }
   },
+  // we've attached <App/> to browser
   componentDidMount : function() {
+    // now we setup syncing with Firebase
     base.syncState("/", {
       context : this,
       state : 'moods'
     });
+  },
+  // AKA we're about to call "render"
+  componentWillUpdate : function(propz,statez) {
+    console.log("componentWillUpdate: statez: ");
+    console.log(statez);
+    console.log("componentWillUpdate: propz: ");
+    console.log(propz);
+
   },
   addMoodToState : function(mood) {
     var timestamp = (new Date(mood.submitTime)).getTime();
