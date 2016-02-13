@@ -214,25 +214,28 @@ var MasterMoodEntry = React.createClass({
   }
 })
 
-var SingleMood = React.createClass({
+var SingleMoodOrErrorMessage = React.createClass({
   render : function() {
-    if (this.props.moodProp) {
-      return (<MoodNucleus moodProp={this.props.moodProp} />);
+    var moodDatumExists = this.props.moodDatum;
+    var errorMessage = this.props.errorMessage ? this.props.errorMessage : 'Missing mood, no error message provided';
+    if (moodDatumExists) {
+      return (<MoodNucleus moodDatum={this.props.moodDatum} />);
     } else {
-      return (<p>Enter a mood above.</p>);
+      return (<p>{errorMessage}</p>);
     }
   },
 });
 
 var MoodNucleus = React.createClass({
   render : function() {
-    var details = this.props.moodProp;
+    var details = this.props.moodDatum;
     // wherein we UNstringify submitTime so our helper methods actually work
     var rawSubmitTime = new Date(details.submitTime);
 
     return (
       <div id="hexxx ">
         	<ul id="hexGrid">
+              <h3>&lt;MoodNucleus /&gt; component</h3>
 	            <li className="hex">
 	                <a className="hexIn" href="#">
 	                    <div className="pseudo-img teal">
