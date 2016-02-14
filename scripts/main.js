@@ -61,6 +61,7 @@ var App = React.createClass({
       <div>
         <MasterMoodEntry addMoodToState={this.addMoodToState} />
         <SingleMoodOrErrorMessage moodDatum={this.state.latestMood} errorMessage="Moods will display here after you enter one."/>
+        <AllMoods moodData={this.state.moods}  />
       </div>
     )
   }
@@ -73,13 +74,20 @@ var MasterMoodEntry = React.createClass({
       moodButtonValue : undefined,
       showInvalidInputWarning : false,
       enteredText : "",
+      activityIsFocused : false
     }
+  },
+  unFocusActivity: function(event) {
+    this.setState({ activityIsFocused : false })
+  },
+  focusActivity: function(event) {
+    this.setState({ activityIsFocused : true })
   },
   handleChange : function(event) {
     this.setState({ enteredText : event.target.value })
   },
   remainingCharacters : function() {
-    if (this.state.enteredText.length>0)  {
+    if (this.state.activityIsFocused && this.state.enteredText.length>0)  {
       return 140 - this.state.enteredText.length;
     }
   },
@@ -88,6 +96,7 @@ var MasterMoodEntry = React.createClass({
     this.setState({
       moodButtonValue : this.state.moodButtonValue,
       showInvalidInputWarning : false,
+      enteredText : "",
     });
   },
   createMood : function(event) {
@@ -150,7 +159,17 @@ var MasterMoodEntry = React.createClass({
               </div>
               <div className="row">
                 <div className="form-group col-xs-12 col-md-8 col-lg-8" >
-                    <input type="text" onChange={this.handleChange} className="form-control" ref="activity" id="inputDefault" placeholder="...like reading in bed"  autoComplete="off"/>
+                    <input
+                       type="text"
+                       onFocus={this.focusActivity}
+                       onBlur={this.unFocusActivity}
+                       onChange={this.handleChange}
+                       className="form-control"
+                       ref="activity"
+                       id="inputDefault"
+                       placeholder="...like reading in bed"
+                       autoComplete="off"
+                    />
                     <label className="control-label" htmlFor="inputDefault">What are you doing?</label>
                     <span className="remaining-characters">{this.remainingCharacters()}</span>
                 </div>
@@ -235,7 +254,6 @@ var MoodNucleus = React.createClass({
     return (
       <div id="hexxx ">
         	<ul id="hexGrid">
-              <h3>&lt;MoodNucleus /&gt; component</h3>
 	            <li className="hex">
 	                <a className="hexIn" href="#">
 	                    <div className="pseudo-img teal">
@@ -302,16 +320,14 @@ var OptionalFlags= React.createClass({
 var AllMoods = React.createClass({
   renderMood : function(key) {
     return (
-      <MoodNucleus key={key} index={key} details={this.state.moods[key]} />
+        <MoodNucleus key={key} index={key} moodDatum={this.props.moodData[key]} />
     )
-
   },
   render : function() {
     return (
       <div>
-        <h3>&lt;AllMoods /&gt; component</h3>
         <ul className="list-of-moods">
-          {Object.keys(this.state.moods).map(this.renderMood)}
+          {Object.keys(this.props.moodData).reverse().map(this.renderMood)}
         </ul>
 
       </div>
