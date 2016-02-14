@@ -26,18 +26,27 @@ var App = React.createClass({
   // we've attached <App/> to browser
   componentDidMount : function() {
     // now we setup syncing with Firebase
+    console.log(base);
     base.syncState("/", {
       context : this,
       state : 'moods'
     });
+    var myLocalStorageReference = localStorage.getItem("local-storage-moodphile");
+
+    if (myLocalStorageReference) {
+      // update our component state to reflect contents of localStorage
+      // I take out the {} in this.setState because Nicky said it's already an object. I get it!
+      this.setState( JSON.parse(myLocalStorageReference ));
+    }
   },
   // AKA we're about to call "render"
-  componentWillUpdate : function(propz,statez) {
-    console.log("componentWillUpdate: statez: ");
-    console.log(statez);
+  componentWillUpdate : function(propz,nextState) {
+    console.log("componentWillUpdate: nextState: ");
+    console.log(nextState);
     console.log("componentWillUpdate: propz: ");
     console.log(propz);
 
+    localStorage.setItem("local-storage-moodphile", JSON.stringify(nextState));
   },
   addMoodToState : function(mood) {
     var timestamp = (new Date(mood.submitTime)).getTime();
@@ -266,15 +275,15 @@ var MoodNucleus = React.createClass({
               <li className="hex">
 	                <a className="hexIn" href="#">
                     <img src="images/flickr-solo-walk-sepia.jpg" alt="" />
-	                    <h1>This is a title</h1>
+	                    {/*<h1>This is a title</h1> */}
 	                    {/*}<p>Gray cast, a gray film settles upon our eyes like a veil.*/}
-	                    <p>{details.activity}</p>
+	                    <p className="hex-activity">{details.activity}</p>
 	                </a>
 	            </li>
               <li className="hex">
 	                <a className="hexIn" href="#">
                     <img src="images/flickr-beach-maroon.jpg" alt="" />
-	                    <h1>.</h1>
+                      {/*<h1>.</h1> */}
 	                    <p className="hexagon-long-text">The pellucid curtains of tiny crystal are draped in layers. There's a fey allure to the
                         wings of the moth, as they incandesce and flicker under the lamplight.
                         Zephyrs, breathing like the sieves of an organ, respire for their rounded minute.</p>
@@ -326,9 +335,9 @@ var AllMoods = React.createClass({
   render : function() {
     return (
       <div>
-        <ul className="list-of-moods">
+        <div className="list-of-moods">
           {Object.keys(this.props.moodData).reverse().map(this.renderMood)}
-        </ul>
+        </div>
 
       </div>
 
