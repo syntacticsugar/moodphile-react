@@ -24,8 +24,8 @@ var historyApiFallback = require('connect-history-api-fallback')
 gulp.task('styles',function() {
   // move over fonts
 
-  gulp.src('css/fonts/**.*')
-    .pipe(gulp.dest('build/css/fonts'))
+  gulp.src('fonts/**.*')
+    .pipe(gulp.dest('build/fonts'))
 
   // Compiles CSS
   /*
@@ -73,7 +73,7 @@ function buildScript(file, watch) {
     transform:  [babelify.configure({stage : 0 })]
   };
 
-  // watchify() if watch requested, otherwise run browserify() once 
+  // watchify() if watch requested, otherwise run browserify() once
   var bundler = watch ? watchify(browserify(props)) : browserify(props);
 
   function rebundle() {
