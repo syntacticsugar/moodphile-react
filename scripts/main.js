@@ -14,9 +14,23 @@ var h = require("./helpers");
 var Rebase = require("re-base");
 var base = Rebase.createClass("https://moodphile.firebaseio.com/");
 
+// something about 2-way binding, from 3:00 Bi-directional data flow
+/*
+  when user types something into input, we want to have our state update with
+  that info.  I think this is called Bi-directional data flow.  React has something
+  called Link-State or React-Link helpers to deal with it, but Wes says it's only
+  top level, and you can't get deeper --- example while you can update the entire
+  fish object in the top level state, you can't easily update fish.picture
+  or fish.description etc, so he uses something called Catalyst which he
+  found on github (https://github.com/tungd/react-catalyst) - the LinkedStateMixin
+*/
+var Catalyst = require("react-catalyst");
+
 var App = React.createClass({
+  mixins : [Catalyst.LinkedStateMixin],
   getInitialState : function() {
     return {
+      loggedIn : {false},
       people : {},
       moods : {},
       latestMood : undefined,
@@ -68,6 +82,7 @@ var App = React.createClass({
   render : function() {
     return (
       <div>
+        <LoginWithSocialMedia />
         <MasterMoodEntry addMoodToState={this.addMoodToState} />
         <SingleMoodOrErrorMessage moodDatum={this.state.latestMood} errorMessage="Moods will display here after you enter one."/>
         <AllMoods moodData={this.state.moods}  />
@@ -199,6 +214,7 @@ var MasterMoodEntry = React.createClass({
 
 
               <MoodButtons currentMoodButtonValue={this.state.moodButtonValue} setMoodButtonValue={this.setMoodButtonValue} />
+
               <button type="submit" className="btn btn-submit-mood">GO</button>
               <span className={"invalid-input-"+ (this.state.showInvalidInputWarning ? 'show' : 'hide')}>
                 Don't be shy, pick a mood.
@@ -311,7 +327,17 @@ var MoodButtons= React.createClass({
               }else {
                 nouveauButtonClassName = "nouveau"
               }
-                return <button className={nouveauButtonClassName} key={"poopieface"+x} onClick={function(){setMoodButtonValue(x)}} name='mood_on_button' type='button' value={x} >{x}</button>;
+                return (
+                  <button
+                    className={nouveauButtonClassName}
+                    key={"poopieface"+x}
+                    onClick={function(){setMoodButtonValue(x)}}
+                    name='mood_on_button'
+                    type='button'
+                    value={x}
+                  >
+                  {x}
+                  </button>);
             })}
           </div>
         </div>
@@ -344,5 +370,22 @@ var AllMoods = React.createClass({
     )
   }
 });
+
+var LoginWithSocialMedia = React.createClass({
+  render : function() {
+    return (
+      <div className="login-with-social-media">
+        <ul>
+          <li><i className="fa fa-facebook-square fa-2x"></i>Facebook</li>
+          <li><i className="fa fa-github fa-2x"></i>Gihub</li>
+          <li><i className="fa fa-twitter fa-2x"></i>Twitter</li>
+        </ul>
+      </div>
+    )
+  }
+})
+
+
+
 
 ReactDOM.render(<App/>, document.querySelector('#main-moods'));
