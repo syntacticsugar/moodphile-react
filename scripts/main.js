@@ -30,7 +30,7 @@ var App = React.createClass({
   mixins : [Catalyst.LinkedStateMixin],
   getInitialState : function() {
     return {
-      loggedIn : {false},
+      loggedIn : false,
       people : {},
       moods : {},
       latestMood : undefined,
@@ -82,7 +82,7 @@ var App = React.createClass({
   render : function() {
     return (
       <div>
-        <LoginWithSocialMedia />
+        <LoginWithSocialMedia loggedIn={this.state.loggedIn} />
         <MasterMoodEntry addMoodToState={this.addMoodToState} />
         <SingleMoodOrErrorMessage moodDatum={this.state.latestMood} errorMessage="Moods will display here after you enter one."/>
         <AllMoods moodData={this.state.moods}  />
@@ -352,6 +352,7 @@ var OptionalFlags= React.createClass({
     )
   }
 });
+
 var AllMoods = React.createClass({
   renderMood : function(key) {
     return (
@@ -373,15 +374,26 @@ var AllMoods = React.createClass({
 
 var LoginWithSocialMedia = React.createClass({
   render : function() {
-    return (
-      <div className="login-with-social-media">
-        <ul>
-          <li><i className="fa fa-facebook-square fa-2x"></i>Facebook</li>
-          <li><i className="fa fa-github fa-2x"></i>Gihub</li>
-          <li><i className="fa fa-twitter fa-2x"></i>Twitter</li>
-        </ul>
-      </div>
-    )
+    var loggedIn = this.props.loggedIn;
+
+    if (!loggedIn) {
+      return (
+        <div className="login-with-social-media">
+          <ul>Log in securely:
+            <li><a href=""><i className="fa fa-facebook-square fa-2x"></i></a></li>
+            <li><a href=""><i className="fa fa-github fa-2x"></i></a></li>
+            <li><a href=""><i className="fa fa-twitter fa-2x"></i></a></li>
+          </ul>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          You are logged in via (something) loggedIn: {loggedIn}.
+        </div>
+      )
+    }
+
   }
 })
 
