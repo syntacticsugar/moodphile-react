@@ -11,8 +11,10 @@ var createBrowserHistory = require("history/lib/createBrowserHistory");
 var h = require("./helpers");
 
 //Firebase
-var Rebase = require("re-base");
+var Rebase = require("re-base"); // used for syncing
+var Firebase = require("firebase"); // used for auth
 var base = Rebase.createClass("https://moodphile.firebaseio.com/");
+const ref = new Firebase("https://moodphile.firebaseio.com/");
 
 // something about 2-way binding, from 3:00 Bi-directional data flow
 /*
@@ -31,17 +33,60 @@ var App = React.createClass({
   getInitialState : function() {
     return {
       loggedIn : false,
+      uid: '',
       people : {},
       moods : {},
       latestMood : undefined,
       /* moodCurrentlyBeingEdited : {} */
     }
   },
+  authenticate : function(provider) {
+    console.log("Trying to auth with" + provider);
+    ref.authWithOAuthPopup(provider, this.authHandler);
+  },
+  logout() {
+    ref.unauth();
+    localStorage.removeItem('token');
+    this.setState({
+      uid : null,
+      loggedIn : false,
+    });
+  },
+  authHandler(err, authData) {
+    console.log('err:');
+    console.log(err);
+    console.log('authData:');
+    console.log(authData);
+    if(err) {
+      console.err(err);
+      return;
+    }
+    var uid = authData.uid;
+    // save the login token in the browser
+    localStorage.setItem('token',authData.token);
+
+    const moodsRef = ref.child(uid + '/moods');
+    moodsRef.on('value', (snapshot)=> {
+      var data = snapshot.val() || {};
+      // claim it as our own if there is no owner already
+      if(!data.owner) {
+        moodsRef.set({
+          owner : uid,
+        });
+      }
+      // update our state to reflect the current store owner and user
+      this.setState({
+        uid : uid,
+        loggedIn: true,
+      });
+
+    });
+  },
   // we've attached <App/> to browser
   componentDidMount : function() {
     // now we setup syncing with Firebase
     console.log(base);
-    base.syncState("/", {
+    base.syncState(this.state.uid + '/moods', {
       context : this,
       state : 'moods'
     });
@@ -54,6 +99,7 @@ var App = React.createClass({
     }
   },
   // AKA we're about to call "render"
+  /*
   componentWillUpdate : function(propz,nextState) {
     console.log("componentWillUpdate: nextState: ");
     console.log(nextState);
@@ -62,6 +108,7 @@ var App = React.createClass({
 
     localStorage.setItem("local-storage-moodphile", JSON.stringify(nextState));
   },
+  */
   addMoodToState : function(mood) {
     var timestamp = (new Date(mood.submitTime)).getTime();
     // update the state object
@@ -82,7 +129,7 @@ var App = React.createClass({
   render : function() {
     return (
       <div>
-        <LoginWithSocialMedia loggedIn={this.state.loggedIn} />
+        <LoginWithSocialMedia authenticate={this.authenticate} loggedIn={this.state.loggedIn} />
         <MasterMoodEntry addMoodToState={this.addMoodToState} />
         <SingleMoodOrErrorMessage moodDatum={this.state.latestMood} errorMessage="Moods will display here after you enter one."/>
         <AllMoods moodData={this.state.moods}  />
@@ -309,7 +356,8 @@ var MoodNucleus = React.createClass({
       </div>
     )
   }
-})
+});
+
 var MoodButtons= React.createClass({
   render : function() {
     var setMoodButtonValue = this.props.setMoodButtonValue;
@@ -375,13 +423,16 @@ var AllMoods = React.createClass({
 var LoginWithSocialMedia = React.createClass({
   render : function() {
     var loggedIn = this.props.loggedIn;
+    var authenticate = this.props.authenticate;
+    console.log(this.props);
 
     if (!loggedIn) {
       return (
         <div className="login-with-social-media">
-          <ul>Log in securely:
-            <li><a href=""><i className="fa fa-facebook-square fa-2x"></i></a></li>
-            <li><a href=""><i className="fa fa-github fa-2x"></i></a></li>
+          <p>Log in securely:</p>
+          <ul>
+            <li><a href="" onClick={function(e) {e.preventDefault(); authenticate('facebook')}}><i className="fa fa-facebook-square fa-2x"></i></a></li>
+            <li><a href="" onClick={function(e) {e.preventDefault(); authenticate('github')}}><i className="fa fa-github fa-2x"></i></a></li>
             <li><a href=""><i className="fa fa-twitter fa-2x"></i></a></li>
           </ul>
         </div>
