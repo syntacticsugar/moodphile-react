@@ -77,8 +77,8 @@ a.navbar-brand {
   background-color: transparent;
   border: 1px dotted #915265;
   color: #915265;
-  font-size: 1.3em;
-  max-width: 75px;
+  font-size: 1.4em;
+  max-width: 79px;
 }
 .nouveau:nth-last-child(1), .nouveau:nth-last-child(2) {
   padding-left: 1.45em;
@@ -88,7 +88,7 @@ a.navbar-brand {
   background-color: #1f9ebe; /* deep sky blue crayon  */
   color: #c6f4ff; /* pale sky blue crayon */
 }
-.nouveau:active, .nouveau:focus {
+.nouveau:active, .nouveau:focus, .nouveau-force-focus {
   color: #FA598B;
   color: #62dfff; /* cyan */
   background-color: #6d2a3f; /* deep plum */
@@ -290,5 +290,25 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     transition: thistle 5000s ease-in-out 0s;
+}
+
+
+
+
+
+
+
+
+
+
+.login-with-social-media {
+  position: absolute;
+  top: 1em;
+  right: 4em;
+}
+.login-with-social-media li {
+  color: steelblue;
+  display: inline-block;
+  padding-right: 1em;
 }
 

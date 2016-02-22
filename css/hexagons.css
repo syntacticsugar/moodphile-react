@@ -69,12 +69,16 @@
   background-color: #e0ccd3;
   background-color: #f1e8eb;
   background-color: #e0ccd3;
+  background-color: #f2dae0;
 }
 .p6-tile {
   background: url("../images/p6.png") repeat;
 }
 .p6-2x-tile {
   background: url("../images/p6_@2X.png") repeat;
+}
+.black-thread {
+  background: url("../images/black-thread-41.png") repeat;
 }
 
 .hex h1, .hex p {
@@ -117,6 +121,9 @@
         -ms-transform:translateY(100%) translatez(-1px);
             transform:translateY(100%) translatez(-1px);
             */
+}
+.hex p.hex-activity {
+  font-size: 1.1em;
 }
 
 
