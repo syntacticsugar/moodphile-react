@@ -1,6 +1,13 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+//var ReactD3 = require('react-d3-tooltip');
+var Chart = require('react-d3-core').Chart;
+//var LineTooltip = require('react-d3-tooltip').LineTooltip;
+var LineTooltip = require('react-d3-basic').LineChart;
+console.log(Chart);
+console.log(LineTooltip);
+
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
@@ -121,23 +128,36 @@ var App = React.createClass({
   removeMoodFromState : function(key) {
     this.state.moods[key] = null;
     this.setState({ moods : this.state.moods })
-
   },
   render : function() {
-    return (
-      <div>
-        <LoginWithSocialMedia
-          authenticate={this.authenticate}
-          logout={this.logout}
-          loggedInWith={this.state.loggedInWith} />
-        {/*
-        <LoginFake authenticate={this.authenticate} logout={this.logout} loggedIn={this.state.loggedIn} />
-        */}
-        <MasterMoodEntry addMoodToState={this.addMoodToState} />
-        <SingleMoodOrErrorMessage moodDatum={this.state.latestMood} errorMessage="Moods will display here after you enter one."/>
-        <AllMoods moodData={this.state.moods}  />
-      </div>
-    )
+      console.log('App props:');
+      console.log(this.props);
+      if (this.props.route.path === "/") {
+        return (
+          <div>
+            <NavAndLogin />
+            <LoginWithSocialMedia
+              authenticate={this.authenticate}
+              logout={this.logout}
+              loggedInWith={this.state.loggedInWith} />
+            {/*
+            <LoginFake
+              authenticate={this.authenticate}
+              logout={this.logout}
+              loggedInWith={this.state.loggedInWith} />
+            */}
+            <MasterMoodEntry addMoodToState={this.addMoodToState} />
+            <SingleMoodOrErrorMessage moodDatum={this.state.latestMood} errorMessage="Moods will display here after you enter one."/>
+            <AllMoods moodData={this.state.moods}  />
+          </div>
+        )
+      } else if (this.props.route.path === "/moods") {
+        return (
+          <MoodDataViz />
+        )
+      } else {
+        return <NotFound />
+      }
   }
 });
 
@@ -423,6 +443,47 @@ var AllMoods = React.createClass({
   }
 });
 
+var NavAndLogin = React.createClass({
+  render : function() {
+    return (
+      <nav className="navbar navbar-inverse">
+  	      <div className="container-fluid">
+  	        <div className="navbar-header">
+  	          <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+  	            <span className="sr-only">Toggle navigation</span>
+  	            <span className="icon-bar"></span>
+  	            <span className="icon-bar"></span>
+  	            <span className="icon-bar"></span>
+  	          </button>
+  	          <a className="navbar-brand" href="/"><img src="images/moodphile-logo-med.png" /></a>
+  	        </div>
+
+  	        <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+  	          <ul className="nav navbar-nav">
+  	            <li className="active"><a href="/">Post <span className="sr-only">(current)</span></a></li>
+  	            <li><a href="/moods">Moods</a></li>
+  	            <li><a href="#">Manage</a></li>
+  	            <li><a href="#">Explore</a></li>
+  	            <li className="dropdown">
+  	              <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span className="caret"></span></a>
+  	              <ul className="dropdown-menu" role="menu">
+  	                <li><a href="#">Action</a></li>
+  	                <li><a href="#">Another action</a></li>
+  	                <li><a href="#">Something else here</a></li>
+  	                <li className="divider"></li>
+  	                <li><a href="#">Separated link</a></li>
+  	                <li className="divider"></li>
+  	                <li><a href="#">One more separated link</a></li>
+  	              </ul>
+  	            </li>{/*<!-- /.dropdown --> */}
+              </ul> {/*<!-- /.nav.navbar-nav --> */}
+  	        </div>
+  	      </div>
+  	    </nav>
+    )
+  }
+});
+
 var LoginWithSocialMedia = React.createClass({
   render : function() {
     var loggedInWith = this.props.loggedInWith;
@@ -473,7 +534,124 @@ var LoginFake = React.createClass({
   }
 });
 
+var MoodDataViz = React.createClass({
+  render : function() {
+    var width = 700,
+        height = 300,
+        margins = {left: 100, right: 100, top: 20, bottom: 20},
+        title = "User sample";
+    // chart series,
+    // field: is what field your data want to be selected
+    // name: the name of the field that display in legend
+    // color: what color is the line
+    var chartSeries = [
+      {
+        field: 'BMI',
+        name: 'BMI',
+        color: 'deeppink'
+      }
+    ];
+    // your x accessor
+    var x = function(d) {
+      return d.index;
+    };
+    var chartData =
+    [
+      {
+        name: "Lavon Hilll I",
+        BMI: 20.57,
+        age: 12,
+        birthday: "1994-10-26T00:00:00.000Z",
+        city: "Annatown",
+        married: true,
+        index: 1
+      },
+      {
+        name: "Jennifer Wilson",
+        BMI: 20,
+        age: 28,
+        birthday: "1987-02-09T00:00:00.000Z",
+        city: "West Virginia",
+        married: false,
+        index: 2
+      },
+      {
+        name: "Clovis Pagac",
+        BMI: 24.28,
+        age: 26,
+        birthday: "1995-11-10T00:00:00.000Z",
+        city: "South Eldredtown",
+        married: false,
+        index: 3
+      },
+      {
+        name: "Lucy Fong",
+        BMI: 19.9,
+        age: 26,
+        birthday: "1989-08-09T00:00:00.000Z",
+        city: "Brooklyn",
+        married: false,
+        index: 4
+      },
+      {
+        name: "Gaylord Paucek",
+        BMI: 24.41,
+        age: 30,
+        birthday: "1975-06-12T00:00:00.000Z",
+        city: "Koeppchester",
+        married: true,
+        index: 5
+      },
+      {
+        name: "Ashlynn Kuhn MD",
+        BMI: 23.77,
+        age: 32,
+        birthday: "1985-08-09T00:00:00.000Z",
+        city: "West Josiemouth",
+        married: false,
+        index: 6
+      },
+    ];
+    return (
+      <div className="container">
+        <Chart
+            title={title}
+            width={width}
+            height={height}
+            margins= {margins}
+        >
+          <LineTooltip
+          margins= {margins}
+          title={title}
+          data={chartData}
+          width={width}
+          height={height}
+          chartSeries={chartSeries}
+          x={x}
+        />
+        </Chart>
+      </div>
+    )
+  }
+});
+
+var NotFound = React.createClass({
+  render : function() {
+    return (
+      <div className="container">
+        <h1>404 fo sho</h1>
+      </div>
+    )
+  }
+});
+
+var routes = (
+  <Router history={createBrowserHistory()}>
+    <Route path="/" component={App}/>
+    <Route path="/moods" component={App}/>
+    <Route path="*" component={App}/>
+  </Router>
+);
 
 
-
-ReactDOM.render(<App/>, document.querySelector('#main-moods'));
+ReactDOM.render(routes, document.querySelector('#main-moods'));
