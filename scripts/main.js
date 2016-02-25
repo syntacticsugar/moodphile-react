@@ -14,7 +14,7 @@ var h = require("./helpers");
 var Rebase = require("re-base"); // used for syncing
 var Firebase = require("firebase"); // used for auth
 var base = Rebase.createClass("https://moodphile.firebaseio.com/");
-const ref = new Firebase("https://moodphile.firebaseio.com/");
+const firebaseAuthRef = new Firebase("https://moodphile.firebaseio.com/");
 
 // something about 2-way binding, from 3:00 Bi-directional data flow
 /*
@@ -32,7 +32,7 @@ var App = React.createClass({
   mixins : [Catalyst.LinkedStateMixin],
   getInitialState : function() {
     return {
-      loggedIn : false,
+      loggedInWith : false,
       uid: '',
       people : {},
       moods : {},
@@ -42,30 +42,27 @@ var App = React.createClass({
   },
   authenticate : function(provider) {
     console.log("Trying to auth with" + provider);
-    ref.authWithOAuthPopup(provider, this.authHandler);
+    firebaseAuthRef.authWithOAuthPopup(provider, this.postAuthInstructions);
   },
   logout() {
-    ref.unauth();
+    firebaseAuthRef.unauth();
     localStorage.removeItem('token');
     this.setState({
       uid : null,
-      loggedIn : false,
+      loggedInWith : false,
     });
   },
-  authHandler(err, authData) {
-    console.log('err:');
-    console.log(err);
-    console.log('authData:');
-    console.log(authData);
+  postAuthInstructions(err, authData) {
     if(err) {
       console.err(err);
       return;
     }
+    //console.log("Hey, the provider you used is:" + provider);
     var uid = authData.uid;
     // save the login token in the browser
     localStorage.setItem('token',authData.token);
 
-    const moodsRef = ref.child(uid + '/moods');
+    const moodsRef = firebaseAuthRef.child(uid + '/moods');
     moodsRef.on('value', (snapshot)=> {
       var data = snapshot.val() || {};
       // claim it as our own if there is no owner already
@@ -77,7 +74,7 @@ var App = React.createClass({
       // update our state to reflect the current store owner and user
       this.setState({
         uid : uid,
-        loggedIn: true,
+        loggedInWith : authData.provider,
       });
 
     });
@@ -129,7 +126,13 @@ var App = React.createClass({
   render : function() {
     return (
       <div>
-        <LoginWithSocialMedia authenticate={this.authenticate} loggedIn={this.state.loggedIn} />
+        <LoginWithSocialMedia
+          authenticate={this.authenticate}
+          logout={this.logout}
+          loggedInWith={this.state.loggedInWith} />
+        {/*
+        <LoginFake authenticate={this.authenticate} logout={this.logout} loggedIn={this.state.loggedIn} />
+        */}
         <MasterMoodEntry addMoodToState={this.addMoodToState} />
         <SingleMoodOrErrorMessage moodDatum={this.state.latestMood} errorMessage="Moods will display here after you enter one."/>
         <AllMoods moodData={this.state.moods}  />
@@ -422,11 +425,10 @@ var AllMoods = React.createClass({
 
 var LoginWithSocialMedia = React.createClass({
   render : function() {
-    var loggedIn = this.props.loggedIn;
+    var loggedInWith = this.props.loggedInWith;
     var authenticate = this.props.authenticate;
-    console.log(this.props);
 
-    if (!loggedIn) {
+    if (!loggedInWith) {
       return (
         <div className="login-with-social-media">
           <p>Log in securely:</p>
@@ -440,13 +442,36 @@ var LoginWithSocialMedia = React.createClass({
     } else {
       return (
         <div>
-          You are logged in via (something) loggedIn: {loggedIn}.
+          You are logged in via {loggedInWith}
+          <button className='btn'  onClick={this.props.logout}>Logout</button>
         </div>
       )
     }
-
   }
-})
+});
+
+var LoginFake = React.createClass({
+  render : function() {
+    if (!true) {
+      return (
+        <div className="login-with-social-media">
+          <p>Fakely log in:</p>
+          <ul>
+            <li><a href="" onClick={function(e) {e.preventDefault(); authenticate('facebook')}}><i className="fa fa-facebook-square fa-2x"></i></a></li>
+            <li><a href="" onClick={function(e) {e.preventDefault(); authenticate('github')}}><i className="fa fa-github fa-2x"></i></a></li>
+            <li><a href=""><i className="fa fa-twitter fa-2x"></i></a></li>
+          </ul>
+        </div>
+      )
+    } else {
+      return (
+        <div className="login-with-social-media">
+          Success. <button className='btn' onClick={this.props.logout}>Logout</button>
+        </div>
+      )
+    }
+  }
+});
 
 
 
