@@ -245,13 +245,13 @@ var MasterMoodEntry = React.createClass({
     return (
       <section className="main-mood-panel col-xs-12 col-md-12 col-lg-12">
           <form className="form-horizontal" ref="moodForm" onSubmit={this.createMood} autoComplete="off">
-              <div className="row">
+              <div className="row animated slideInLeft">
                 <div className="form-group col-xs-8 col-md-6 col-lg-3">
                     <input type="text" className="form-control" ref="user" id="inputDefault" placeholder="start typing..."/>
                     <label className="control-label" htmlFor="inputDefault">Name</label>
                 </div>
               </div>
-              <div className="row">
+              <div className="row animated slideInLeft">
                 <div className="form-group col-xs-12 col-md-8 col-lg-8" >
                     <input
                        type="text"
@@ -269,7 +269,7 @@ var MasterMoodEntry = React.createClass({
                 </div>
               </div>
 
-              <div className="row">
+              <div className="row animated slideInLeft">
                 <div className="form-group dual-location">
                     <div className="col-xs-6 col-sm-6 col-md-4">
                         <input type="text" className="form-control" ref='location' placeholder="bedroom"/>
@@ -285,7 +285,7 @@ var MasterMoodEntry = React.createClass({
 
               <MoodButtons currentMoodButtonValue={this.state.moodButtonValue} setMoodButtonValue={this.setMoodButtonValue} />
 
-              <button type="submit" className="btn btn-submit-mood">GO</button>
+              <button type="submit" className="btn btn-submit-mood animated slideInLeft">GO</button>
               <span className={"invalid-input-"+ (this.state.showInvalidInputWarning ? 'show' : 'hide')}>
                 Don't be shy, pick a mood.
               </span>
@@ -386,7 +386,7 @@ var MoodButtons= React.createClass({
     var setMoodButtonValue = this.props.setMoodButtonValue;
     var currentMoodButtonValue = this.props.currentMoodButtonValue;
     return (
-      <div className="row mood-pusher-wrapper">
+      <div className="row mood-pusher-wrapper animated slideInLeft">
         <div className="form-group col-xs-12 col-sm-8 col-md-8 col-lg-6">
           <dt>Mood? <span className="label-lowlight">(O is lowest, 11 is smashingly happy)</span></dt>
 
