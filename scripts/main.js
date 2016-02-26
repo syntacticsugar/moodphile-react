@@ -1,5 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var CSSTransitionGroup = require('react-addons-css-transition-group');
 
 //var ReactD3 = require('react-d3-tooltip');
 var Chart = require('react-d3-core').Chart;
@@ -40,6 +41,7 @@ var App = React.createClass({
   getInitialState : function() {
     return {
       loggedInWith : false,
+      socialMediaDisplayName : '',
       uid: '',
       people : {},
       moods : {},
@@ -65,6 +67,8 @@ var App = React.createClass({
       return;
     }
     //console.log("Hey, the provider you used is:" + provider);
+    console.log("authData variable:");
+    console.log(authData);
     var uid = authData.uid;
     // save the login token in the browser
     localStorage.setItem('token',authData.token);
@@ -82,6 +86,7 @@ var App = React.createClass({
       this.setState({
         uid : uid,
         loggedInWith : authData.provider,
+        socialMediaDisplayName : authData[authData.provider].displayName,
       });
 
     });
@@ -139,7 +144,9 @@ var App = React.createClass({
             <LoginWithSocialMedia
               authenticate={this.authenticate}
               logout={this.logout}
-              loggedInWith={this.state.loggedInWith} />
+              loggedInWith={this.state.loggedInWith}
+              socialMediaDisplayName={this.state.socialMediaDisplayName}
+              />
             {/*
             <LoginFake
               authenticate={this.authenticate}
@@ -244,7 +251,10 @@ var MasterMoodEntry = React.createClass({
   render : function() {
     return (
       <section className="main-mood-panel col-xs-12 col-md-12 col-lg-12">
-          <form className="form-horizontal" ref="moodForm" onSubmit={this.createMood} autoComplete="off">
+          <form className="form-horizontal"
+                ref="moodForm"
+                onSubmit={this.createMood}
+                autoComplete="off">
               <div className="row animated slideInLeft">
                 <div className="form-group col-xs-8 col-md-6 col-lg-3">
                     <input type="text" className="form-control" ref="user" id="inputDefault" placeholder="start typing..."/>
@@ -487,6 +497,7 @@ var NavAndLogin = React.createClass({
 var LoginWithSocialMedia = React.createClass({
   render : function() {
     var loggedInWith = this.props.loggedInWith;
+    var socialMediaDisplayName = this.props.socialMediaDisplayName;
     var authenticate = this.props.authenticate;
     function iconSpecificToSocial(loggedInWith) {
       return "fa fa-2x fa-" + loggedInWith;
@@ -509,7 +520,7 @@ var LoginWithSocialMedia = React.createClass({
     } else {
       return (
         <div className="login-with-social-media">
-          You are logged in via <i className={iconSpecificToSocial(loggedInWith)}></i>{loggedInWith}
+          {socialMediaDisplayName}, you are logged in via <i className={iconSpecificToSocial(loggedInWith)}></i>{loggedInWith}
           <button className='btn'  onClick={this.props.logout}>Logout</button>
         </div>
       )
