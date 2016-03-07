@@ -15,15 +15,6 @@ import App from './components/App';
 import NotFound from './components/NotFound';
 import MoodDataViz from './components/MoodDataViz';
 
-
-var OptionalFlags= React.createClass({
-  render : function() {
-    return(
-      <br/>
-    )
-  }
-});
-
 var routes = (
   <Router history={createHistory()}>
     <Route path="/" component={App}/>
@@ -31,6 +22,5 @@ var routes = (
     <Route path="*" component={NotFound}/>
   </Router>
 );
-
 
 ReactDOM.render(routes, document.querySelector('#main-moods'));
