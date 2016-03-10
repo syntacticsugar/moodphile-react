@@ -125,7 +125,10 @@ var MasterMoodEntry = React.createClass({
               </div>
 
 
-              <MoodButtons currentMoodButtonValue={this.state.moodButtonValue} setMoodButtonValue={this.setMoodButtonValue} />
+              <MoodButtons
+                  currentMoodButtonValue={this.state.moodButtonValue}
+                  setMoodButtonValue={this.setMoodButtonValue}
+              />
 
               <button type="submit" className="btn btn-submit-mood animated slideInLeft">GO</button>
               <span className={"invalid-input-"+ (this.state.showInvalidInputWarning ? 'show' : 'hide')}>

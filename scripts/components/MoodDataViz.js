@@ -10,8 +10,8 @@ console.log(LineTooltip);
 
 var MoodDataViz = React.createClass({
   render : function() {
-    var width = 700,
-        height = 300,
+    var width = 900,
+        height = 500,
         margins = {left: 100, right: 100, top: 20, bottom: 20},
         title = "User sample";
     // chart series,
@@ -21,14 +21,28 @@ var MoodDataViz = React.createClass({
     var chartSeries = [
       {
         field: 'BMI',
-        name: 'BMI',
+        name: 'BMI kthnxbye',
         color: 'deeppink'
       }
     ];
+    var moodChartSeries = [
+      {
+        field : "moodValue",
+        name : "mood",
+        color : "cadetblue",
+
+      }
+    ];
     // your x accessor
+    //var x = function(d) {
+    //  return d.index;
+    //};
     var x = function(d) {
-      return d.index;
+      return (new Date(d.submitTime)).getTime();
     };
+    var moodChartData = Object.keys(this.props.moods).map ( function(key){
+      return this.props.moods[key];
+    }.bind(this));
     var chartData =
     [
       {
@@ -88,22 +102,18 @@ var MoodDataViz = React.createClass({
     ];
     return (
       <div className="container">
-        <Chart
-            title={title}
-            width={width}
-            height={height}
-            margins= {margins}
-        >
-          <LineTooltip
+
+        <LineTooltip
           margins= {margins}
           title={title}
-          data={chartData}
+          //data={chartData}
+          data={moodChartData}
           width={width}
           height={height}
-          chartSeries={chartSeries}
+          chartSeries={moodChartSeries}
+          //chartSeries={chartSeries}
           x={x}
         />
-        </Chart>
       </div>
     )
   }

@@ -7,18 +7,17 @@ var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 
-var Navigation = ReactRouter.Navigation;
 import { createHistory } from 'history'; // it was exported as createHistory despite being named  createBrowserHistory, yes, it's strange!
 //var createBrowserHistory = require("history/lib/createBrowserHistory");
 
 import App from './components/App';
 import NotFound from './components/NotFound';
-import MoodDataViz from './components/MoodDataViz';
+//import MoodDataViz from './components/MoodDataViz';
 
 var routes = (
   <Router history={createHistory()}>
     <Route path="/" component={App}/>
-    <Route path="/moods" component={MoodDataViz}/>
+    <Route path="/moods" component={App}/>
     <Route path="*" component={NotFound}/>
   </Router>
 );

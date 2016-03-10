@@ -1,9 +1,6 @@
 var React = require('react');
-//Firebase
 var Rebase = require("re-base"); // used for syncing
 var Firebase = require("firebase"); // used for auth
-var base = Rebase.createClass("https://moodphile.firebaseio.com/");
-const firebaseAuthRef = new Firebase("https://moodphile.firebaseio.com/");
 
 // chunked components:
 import NotFound from './NotFound';
@@ -13,6 +10,10 @@ import NavAndLogin from './NavAndLogin';
 import LoginWithSocialMedia from './LoginWithSocialMedia';
 import AllMoods from './AllMoods';
 import MoodDataViz from './MoodDataViz';
+
+//Firebase setup
+var base = Rebase.createClass("https://moodphile.firebaseio.com/");
+const firebaseAuthRef = new Firebase("https://moodphile.firebaseio.com/");
 
 var App = React.createClass({
   getInitialState : function() {
@@ -137,7 +138,10 @@ var App = React.createClass({
         )
       } else if (this.props.route.path === "/moods") {
         return (
-          <MoodDataViz />
+          <div>
+            <NavAndLogin />
+            <MoodDataViz moods={this.state.moods}/>
+          </div>
         )
       } else {
         return <NotFound />
