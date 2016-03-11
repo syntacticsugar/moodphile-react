@@ -97,9 +97,7 @@ a.navbar-brand {
 .row.mood-pusher-wrapper .form-group {
   border: 0px solid steelblue;
 }
-.row.mood-pusher-wrapper, .btn-submit-mood {
-  animation-delay: 0.5s;
-}
+
 /*
  * FORM FOR MOODS
  *
@@ -299,13 +297,39 @@ input:-webkit-autofill:active {
     transition: thistle 5000s ease-in-out 0s;
 }
 
+/* ANIMATIONS */
+.row.mood-pusher-wrapper {
+  animation-delay: 0.5s;
+}
 
+.btn-submit-mood {
+  animation-delay: 0.8s;
+}
+@-webkit-keyframes .btn-submit-mood.slideInLeft {
+  from {
+    -webkit-transform: translate3d(-180%, 0, 0);
+    transform: translate3d(-180%, 0, 0);
+    visibility: visible;
+  }
 
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
 
+@keyframes .btn-submit-mood.slideInLeft {
+  from {
+    -webkit-transform: translate3d(-180%, 0, 0);
+    transform: translate3d(-180%, 0, 0);
+    visibility: visible;
+  }
 
-
-
-
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
 
 
 .login-with-social-media {
@@ -318,4 +342,3 @@ input:-webkit-autofill:active {
   display: inline-block;
   padding-right: 1em;
 }
-
