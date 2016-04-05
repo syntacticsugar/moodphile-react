@@ -18,27 +18,39 @@ const firebaseAuthRef = new Firebase("https://moodphile.firebaseio.com/");
 var App = React.createClass({
   getInitialState : function() {
     return {
-      loggedInWith : false,
-      socialMediaDisplayName : '',
-      uid: '',
-      people : {},
+      loggedIn: null,
+      /*
+      loggedIn: {
+        provider: ''
+        socialMediaDisplayName : '',
+        uid: '',
+        rebase: [],
+      }
+      */
+      //loggedInWith : false,
+      //socialMediaDisplayName : '',
+      //uid: null,
+      //people : {},
       moods : {},
-      latestMood : undefined,
-      /* moodCurrentlyBeingEdited : {} */
+      latestMood : null,
+      /* moodcurrentlybeingedited : {} */
     }
   },
+
   authenticate : function(provider) {
-    console.log("Trying to auth with" + provider);
+    console.log("trying to auth with" + provider);
     firebaseAuthRef.authWithOAuthPopup(provider, this.postAuthInstructions);
   },
+
   logout() {
     firebaseAuthRef.unauth();
     localStorage.removeItem('token');
-    this.setState({
-      uid : null,
-      loggedInWith : false,
-    });
+    for (var i in this.state.loggedIn.rebase) {
+      base.removeBinding(this.state.loggedIn.rebase[i]);
+    }
+    this.setState({ loggedIn : null, moods: {}, latestMood: null });
   },
+
   postAuthInstructions(err, authData) {
     if(err) {
       console.err(err);
@@ -51,7 +63,7 @@ var App = React.createClass({
     // save the login token in the browser
     localStorage.setItem('token',authData.token);
 
-    const moodsRef = firebaseAuthRef.child(uid + '/moods');
+    const moodsRef = firebaseAuthRef.child('users/' + uid + '/moods');
     moodsRef.on('value', (snapshot)=> {
       var data = snapshot.val() || {};
       // claim it as our own if there is no owner already
@@ -60,23 +72,55 @@ var App = React.createClass({
           owner : uid,
         });
       }
-      // update our state to reflect the current store owner and user
-      this.setState({
-        uid : uid,
-        loggedInWith : authData.provider,
-        socialMediaDisplayName : authData[authData.provider].displayName,
-      });
+      if (!this.state.loggedIn) {
+        // get existing moods (for un-authenticated user, so we can add them to moods for their account
+        var preLoginMoods = this.state.moods;
+
+        console.log('about to setup sync sync state:');
+        console.log('path = users/' + uid + '/moods');
+        var syncMoods = base.syncState('users/' + uid + '/moods', {
+          context : this,
+          state : 'moods'
+        });
+        console.log(syncMoods);
+
+        var moods = this.state.moods;
+        // copy preLoginMoods into new (authenticated) moods (this might overwrite mood, but it's unlikely)
+        for (var k in preLoginMoods) {
+          moods[k] = preLoginMoods[k];
+        }
+        // update our state to reflect the current store owner and user
+        this.setState({
+          moods: moods,
+          loggedIn: {
+            uid : uid,
+            provider : authData.provider,
+            socialMediaDisplayName : authData[authData.provider].displayName,
+            rebase: [syncMoods],
+          }
+        });
+      }
+
 
     });
   },
+
   // we've attached <App/> to browser
   componentDidMount : function() {
     // now we setup syncing with Firebase
+    console.log('componentDidMount:');
     console.log(base);
-    base.syncState(this.state.uid + '/moods', {
+    // if we sync before authentication, all moods will get synced
+    // with uid = null
+
+    /*
+    var firebaseElements = base.syncState('users/' + this.state.uid + '/moods', {
       context : this,
       state : 'moods'
     });
+    console.log(firebaseElements);
+    */
+
     var myLocalStorageReference = localStorage.getItem("local-storage-moodphile");
 
     if (myLocalStorageReference) {
@@ -96,6 +140,7 @@ var App = React.createClass({
     localStorage.setItem("local-storage-moodphile", JSON.stringify(nextState));
   },
   */
+
   addMoodToState : function(mood) {
     var timestamp = (new Date(mood.submitTime)).getTime();
     // update the state object
@@ -108,10 +153,12 @@ var App = React.createClass({
       latestMood : this.state.latestMood
     });
   },
+
   removeMoodFromState : function(key) {
     this.state.moods[key] = null;
     this.setState({ moods : this.state.moods })
   },
+
   render : function() {
       console.log('App props:');
       console.log(this.props);
@@ -122,15 +169,9 @@ var App = React.createClass({
             <LoginWithSocialMedia
               authenticate={this.authenticate}
               logout={this.logout}
-              loggedInWith={this.state.loggedInWith}
-              socialMediaDisplayName={this.state.socialMediaDisplayName}
+              loggedInWith={this.state.loggedIn ? this.state.loggedIn.provider : null}
+              socialMediaDisplayName={this.state.loggedIn ? this.state.loggedIn.socialMediaDisplayName : null}
               />
-            {/*
-            <LoginFake
-              authenticate={this.authenticate}
-              logout={this.logout}
-              loggedInWith={this.state.loggedInWith} />
-            */}
             <MasterMoodEntry addMoodToState={this.addMoodToState} />
             <SingleMoodOrErrorMessage moodDatum={this.state.latestMood} errorMessage="Moods will display here after you enter one."/>
             <AllMoods moodData={this.state.moods}  />
@@ -147,6 +188,8 @@ var App = React.createClass({
         return <NotFound />
       }
   }
+
 });
 
 export default App;
+
