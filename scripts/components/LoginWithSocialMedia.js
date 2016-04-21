@@ -5,6 +5,7 @@ var LoginWithSocialMedia = React.createClass({
     var loggedInWith = this.props.loggedInWith;
     var socialMediaDisplayName = this.props.socialMediaDisplayName;
     var authenticate = this.props.authenticate;
+
     function iconSpecificToSocial(loggedInWith) {
       return "fa fa-2x fa-" + loggedInWith;
     }
@@ -27,7 +28,7 @@ var LoginWithSocialMedia = React.createClass({
       return (
         <div className="login-with-social-media">
           {socialMediaDisplayName}, you are logged in via <i className={iconSpecificToSocial(loggedInWith)}></i>{loggedInWith}
-          <button className='btn'  onClick={this.props.logout}>Logout</button>
+          <button className='btn' onClick={this.props.logout}>Logout</button>
         </div>
       )
     }

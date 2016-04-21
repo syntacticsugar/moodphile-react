@@ -80,6 +80,24 @@ var MasterMoodEntry = React.createClass({
     /* alert("mood object is: " + mood["moodValue"]); */
     /* alert(mood.activity); */
   },
+  displayName : function() {
+      if (this.props.loggedIn === null) {
+        return (
+          <div className="row animated slideInLeft">
+            <div className="form-group col-xs-8 col-md-6 col-lg-3">
+                <input type="text" className="form-control" ref="user" id="inputDefault" placeholder="start typing..."/>
+                <label className="control-label" htmlFor="inputDefault">Name</label>
+            </div>
+          </div>
+        )
+      } else {
+        return (
+          <div className="social-media-display-name">
+            {this.props.socialMediaDisplayName}
+          </div>
+        )
+      }
+  },
   render : function() {
     return (
       <section className="main-mood-panel col-xs-12 col-md-12 col-lg-12">
@@ -87,12 +105,18 @@ var MasterMoodEntry = React.createClass({
                 ref="moodForm"
                 onSubmit={this.createMood}
                 autoComplete="off">
+
+                {/*
               <div className="row animated slideInLeft">
                 <div className="form-group col-xs-8 col-md-6 col-lg-3">
                     <input type="text" className="form-control" ref="user" id="inputDefault" placeholder="start typing..."/>
                     <label className="control-label" htmlFor="inputDefault">Name</label>
                 </div>
               </div>
+            */}
+
+              {this.displayName()}
+
               <div className="row animated slideInLeft">
                 <div className="form-group col-xs-12 col-md-8 col-lg-8" >
                     <input

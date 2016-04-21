@@ -172,7 +172,11 @@ var App = React.createClass({
               loggedInWith={this.state.loggedIn ? this.state.loggedIn.provider : null}
               socialMediaDisplayName={this.state.loggedIn ? this.state.loggedIn.socialMediaDisplayName : null}
               />
-            <MasterMoodEntry addMoodToState={this.addMoodToState} />
+            <MasterMoodEntry
+              addMoodToState={this.addMoodToState}
+              loggedIn={this.state.loggedIn}
+              socialMediaDisplayName={this.state.loggedIn ? this.state.loggedIn.socialMediaDisplayName : null}
+            />
             <SingleMoodOrErrorMessage moodDatum={this.state.latestMood} errorMessage="Moods will display here after you enter one."/>
             <AllMoods moodData={this.state.moods}  />
           </div>
@@ -192,4 +196,3 @@ var App = React.createClass({
 });
 
 export default App;
-
